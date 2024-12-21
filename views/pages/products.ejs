@@ -1,0 +1,367 @@
+<% layout('layouts/app') %>
+    <div class="container-fluid">
+        <div class="inner-contents">
+            <!-- <div class="page-header d-flex align-items-center justify-content-between mr-bottom-30">
+                <div class="left-part">
+                    <h2 class="text-dark">Data Tables</h2>
+                    <p class="text-gray mb-0">Lorem ipsum dolor sit amet </p>
+                </div>
+                <div class="right-part">
+                    <form class="search-form w-auto" action="search.php">
+                        <input type="text" name="search" class=" bg-white form-control" placeholder="Search">
+                        <button type="submit" class="btn"><img src="assets/img/svg/search.svg" alt=""></button>
+                    </form>
+                </div>
+            </div> -->
+
+
+            <!-- Table One  -->
+            <div class="card border-0 p-5">
+                <div
+                    class="card-header pb-5 bg-transparent border-0 d-flex align-items-center justify-content-between gap-3">
+                    <h4 class="mb-0">Products</h4>
+                    <div class="ms-auto d-flex align-items-center gap-3">
+
+                        <a data-bs-target="#create_product" data-bs-toggle="modal">
+
+                            <button class="btn btn-gray"> Create</button>
+                        </a>
+                        <!-- <div class="dropdown">
+                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu p-0">
+                                <a class="dropdown-item" href="#">View</a>
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+
+                        <table id="table-1" class="display text-center">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </th>
+                                    <th>Name</th>
+                                    <th>KG/NUG</th>
+
+                                    <!-- <th>Net Weight</th>
+                                    <th>Gross Weight</th>
+                                    <th>Peti</th> -->
+                                    <!-- <th>Country</th> -->
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (allProduct.length> 0) { %>
+                                    <% allProduct.forEach((item, index)=> { %>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                            </td>
+                                            <td>
+                                                <div class="employee d-flex gap-1 flex-wrap">
+                                                    <div class="description">
+                                                        <h6>
+                                                            <%= item.name %>
+                                                        </h6> <!-- Assuming 'item.name' contains the customer's name -->
+                                                        <!-- <small>
+                                                            <%= item.price %>
+                                                        </small> -->
+                                                        <!-- Assuming 'item.email' contains the customer's email -->
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <%= item.nug %>
+                                            </td>
+
+                                            <!-- <td>
+                                                <a href="#" title="<%=  item.address %>">
+                                                    <%= item.net_weight %>
+                                                </a>
+                                            </td>
+                                            <td><span class="indicator active"></span> Active</td>
+                                            <td>
+                                                <%= item.gross_weight %>
+                                            </td>
+                                            <td>
+                                                <%= item.peti %>
+                                            </td> -->
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                        <i class="bi bi-three-dots-vertical"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu p-0">
+                                                        <a class="dropdown-item" href="#">View</a>
+                                                        <a class="dropdown-item edit-btn" href="#"
+                                                            data-id="<%= item.id %>" data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModal">Edit</a>
+                                                        <a class="dropdown-item text-danger" href="#">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <% }); %>
+                                                <% } else { %>
+                                                    <td colspan="8">No customers found.</td>
+                                        </tr>
+                                        <% } %>
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="text-end" colspan="2" >Total:</th>
+                                    <th class="text-start"></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <!-- <div class="modal"> -->
+                            <!-- Use "fade" instead "position-static d-block" for modal action-->
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="ModalLabel">Modal title</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form class="" method="post">
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <input type="hidden" id="record-id" name="id">
+                                                        <label class="form-label">Product Name</label>
+                                                        <input type="text" id="product_name" class="form-control"
+                                                            name="product_name" value="" placeholder="Full Name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Weight per NUG (KG)*</label>
+                                                        <!-- <small class="text-muted">eg: admin@email.com</small> -->
+                                                        <input id="nug" type="number" class="form-control" name="nug"
+                                                            placeholder="00" required="">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-warning btn-sm  px-2"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button id="edit-form" type="button"
+                                                class="btn btn-success btn-sm  px-2">Save
+                                                changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- </div> -->
+                        </div>
+
+                        <!-- Modal Create Product -->
+                        <div class="modal fade" id="create_product" tabindex="-1" aria-labelledby="create_productLabel"
+                            aria-hidden="true">
+                            <!-- <div class="modal"> -->
+                            <!-- Use "fade" instead "position-static d-block" for modal action-->
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="ModalLabel">Modal title</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form class="" method="post">
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <input type="hidden" id="record-id" name="id">
+                                                        <label class="form-label">Product Name</label>
+                                                        <input type="text" id="create_product_name" class="form-control"
+                                                            name="product_name" value=""
+                                                            placeholder="Full Product Name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Weight per NUG (KG)*</label>
+                                                        <!-- <small class="text-muted">eg: admin@email.com</small> -->
+                                                        <input id="create_nug" type="number" class="form-control"
+                                                            name="nug" placeholder="00" required="">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-warning btn-sm  px-2"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button id="create-form" type="button"
+                                                class="btn btn-success btn-sm  px-2">Save
+                                                changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <script>
+
+
+        function getProduct(id) {
+
+            var product_name = $('#product_name').val();
+            var nug = $('#nug').val();
+
+            console.log(id, "dasdasdasdsd");
+
+        }
+
+
+
+        $(document).ready(function () {
+
+
+            // $('#table-1').DataTable({
+            //     footerCallback: function (row, data, start, end, display) {
+            //         var api = this.api();
+
+            //         // Calculate the total for the current page
+            //         var total = api
+            //             .column(1, { page: 'current' }) // Select the second column (index 1)
+            //             .data()
+            //             .reduce(function (a, b) {
+            //                 return parseFloat(a) + parseFloat(b);
+            //             }, 0);
+
+            //         // Update the footer
+            //         $(api.column(1).footer()).html(total.toFixed(2));
+            //     }
+            });
+
+
+            // Open modal on button click
+            $('.edit-btn').on('click', function () {
+                const id = $(this).data('id');
+                const name = $(this).data('name');
+
+                // Populate modal fields
+                $('#record-id').val(id);
+                $('#record-name').val(name);
+                console.log("asdasddas");
+                $.ajax({
+                    url: '/product/editProdut',
+                    method: 'POST',
+                    data: { id },
+                    success: function (response) {
+                        if (response.success) {
+                            // Update table row dynamically
+                            console.log("response", response);
+                            data = response.data;
+                            $('#product_name').val(data.name);
+                            $('#nug').val(data.nug);
+
+                        } else {
+                            alert('Update failed');
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred');
+                    },
+                });
+
+
+                console.log(id, "innerAjax");
+                // Show modal
+                $('#editModal').show();
+            });
+
+            // Handle form submission
+            $('#create-form').on('click', function (e) {
+                e.preventDefault();
+
+                //  const id = $('#record-id').val();
+                const name = $('#create_product_name').val();
+                const nug = $('#create_nug').val();
+
+                validate_blank(name, "Name");
+                validate_blank(nug, "Nug");
+                // AJAX call to update the record
+                $.ajax({
+                    url: '/product/create',
+                    method: 'POST',
+                    data: { name, nug },
+                    success: function (response) {
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            alert('Update failed');
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred');
+                    },
+                });
+            });
+
+            // Handle form submission
+            $('#edit-form').on('click', function (e) {
+                e.preventDefault();
+
+                const id = $('#record-id').val();
+                const name = $('#product_name').val();
+                const nug = $('#nug').val();
+
+                validate_blank(name, "Name");
+                validate_blank(nug, "Nug");
+                // AJAX call to update the record
+                $.ajax({
+                    url: '/product/update',
+                    method: 'POST',
+                    data: { id, name, nug },
+                    success: function (response) {
+                        if (response.success) {
+                            // Update table row dynamically
+                            $(`button[data-id="${id}"]`).data('name', name);
+                            $(`button[data-id="${id}"]`).closest('tr').find('td:nth-child(2)').text(name);
+
+                            location.reload();
+                        } else {
+                            alert('Update failed');
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred');
+                    },
+                });
+            });
+
+            // Close modal (optional implementation)
+            $(document).on('click', function (e) {
+                if ($(e.target).is('#editModal')) {
+                    $('#editModal').hide();
+                }
+            });
+        });
+
+    </script>

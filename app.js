@@ -2,15 +2,19 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const { logRequest } = require('./middlewares');
-const { connectMongoDb } = require("./connection");
+const { connectMongoDb } = require("./models/connection-string");
 const PORT = process.env.PORT || 3000;
 
+const ejsMate = require('ejs-mate');
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/user');
+const customerRouter = require('./routes/customer');
+const productRouter = require('./routes/product');
+const ledgerRouter = require('./routes/ledger');
 
 
 
-connectMongoDb('mongodb://localhost:27017/invoiceDb');
+connectMongoDb('mongodb://localhost:27017/invoicesDb');
 
 // Middleware to serve static files from the assets folder
 app.use('/assets', express.static(path.join(__dirname, 'assets/assets')));
@@ -20,27 +24,20 @@ app.use('/plugins', express.static(path.join(__dirname, 'assets/plugins')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+app.engine('ejs', ejsMate);
+
 // Middleware to parse JSON requests
-// app.use(express.json());
-
-
-
-
-// Define some sample routes
-// app.get('/', (req, res) => {
-//     res.send('Welcome to the homepage!');
-// });
-
-// app.get('/about', (req, res) => {
-//     res.send('This is the about page.');
-// });
+app.use(express.json());
 
 
 
 app.use(express.urlencoded({ extended: false }));
 app.use(logRequest('log.txt'));
 app.use("/", indexRouter);
-// app.use("/user", userRouter);
+app.use("/customer", customerRouter);
+app.use("/product", productRouter);
+app.use("/user", userRouter);
+app.use("/ledger", ledgerRouter);
 
 
 

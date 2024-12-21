@@ -4,6 +4,8 @@ var fs = require('fs');
 var models = {};
 var names = fs.readdirSync('./models');
 
+
+
 names.forEach(name => {
   if (!name.match(/\.js$/)) return;
   if (name === 'connection-string.js' || name === 'all-models.js') return;
@@ -17,10 +19,13 @@ Object.defineProperty(models.__proto__, 'toContext', {
   value: function(context) {
     for (var name in this) {
       context[name] = this[name]; 
+      console.log("names",context);
     }
-    return context;
+    return "context";
   }
 });
  
 
-module.exports = models;
+// Export all models as an object
+module.exports = {models};
+// module.exports = models;

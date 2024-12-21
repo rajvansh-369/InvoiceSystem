@@ -57,7 +57,21 @@ let dataSet = [
           next: '<i class="bi bi-chevron-right"></i>',
           previous: '<i class="bi bi-chevron-left"></i>' 
         }
-      }
+      },
+      footerCallback: function (row, data, start, end, display) {
+        var api = this.api();
+
+        // Calculate the total for the current page
+        var total = api
+            .column(2, { page: 'current' }) // Select the second column (index 1)
+            .data()
+            .reduce(function (a, b) {
+                return parseFloat(a) + parseFloat(b);
+            }, 0);
+
+        // Update the footer
+        $(api.column(2).footer()).html(total.toFixed(2));
+    }
     });
 
     //Table 2

@@ -1,0 +1,2188 @@
+<% layout('layouts/app') %>
+    <div class="container-fluid">
+        <div class="inner-contents">
+            <!-- <div class="page-header d-flex align-items-center justify-content-between mr-bottom-30">
+                <div class="left-part">
+                    <h2 class="text-dark">Data Tables</h2>
+                    <p class="text-gray mb-0">Lorem ipsum dolor sit amet </p>
+                </div>
+                <div class="right-part">
+                    <form class="search-form w-auto" action="search.php">
+                        <input type="text" name="search" class=" bg-white form-control" placeholder="Search">
+                        <button type="submit" class="btn"><img src="assets/img/svg/search.svg" alt=""></button>
+                    </form>
+                </div>
+            </div> -->
+
+
+            <!-- Table One  -->
+            <div class="card border-0 p-5">
+                <div
+                    class="card-header pb-5 bg-transparent border-0 d-flex align-items-center justify-content-between gap-3">
+                    <h4 class="mb-0">Customers</h4>
+                    <div class="ms-auto d-flex align-items-center gap-3">
+                        <div class="dropdown">
+                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu p-0">
+                                <a class="dropdown-item" href="#">View</a>
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+
+                        <table id="table-1" class="display text-center">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Full Address</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Country</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (allCustomer.length> 0) { %>
+                                    <% allCustomer.forEach((item, index)=> { %>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                            </td>
+                                            <td>
+                                                <div class="employee d-flex gap-1 flex-wrap">
+                                                    <div class="description">
+                                                        <h6>
+                                                            <%= item.name %>
+                                                        </h6> <!-- Assuming 'item.name' contains the customer's name -->
+                                                        <small>
+                                                            <%= item.email %>
+                                                        </small>
+                                                        <!-- Assuming 'item.email' contains the customer's email -->
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <%= item.phone %>
+                                            </td>
+                                            <td>
+                                                <a href="#" title="<%=  item.address %>">
+                                                    <%= item.address.length> 20 ? item.address.substring(0, 22) + "..."
+                                                        : item.address; %>
+                                                </a>
+                                            </td>
+                                            <!-- <td><span class="indicator active"></span> Active</td> -->
+                                            <td>
+                                                <%= item.city %>
+                                            </td>
+                                            <td>
+                                                <%= item.state %>
+                                            </td>
+                                            <td>
+                                                <%= item.country %>
+                                            </td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                        <i class="bi bi-three-dots-vertical"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu p-0">
+                                                        <a class="dropdown-item" href="#">View</a>
+                                                        <a class="dropdown-item" href="#">Edit</a>
+                                                        <a class="dropdown-item text-danger" href="#">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <% }); %>
+                                                <% } else { %>
+                                                    <td colspan="8">No customers found.</td>
+                                        </tr>
+                                        <% } %>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Two  -->
+            <div class="card border-0 p-5">
+                <div
+                    class="card-header pb-5 bg-transparent border-0 d-flex align-items-center justify-content-between gap-3">
+                    <h4 class="mb-0">Employee Info</h4>
+                    <div class="ms-auto d-flex align-items-center gap-3">
+                        <div class="dropdown">
+                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu p-0">
+                                <a class="dropdown-item" href="#">View</a>
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table id="table-2" class="display text-center">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="">
+                                    </th>
+                                    <th>Employee</th>
+                                    <th>Role</th>
+                                    <th>Department</th>
+                                    <th>Status</th>
+                                    <th>Join Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/1.jpg" alt="img" width="60">
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Samantha William</h6>
+                                                <small>wills@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>UI Designer</td>
+                                    <td>Product Design</td>
+                                    <td>
+                                        <span class="badge badge-soft-success">
+                                            <i class="bi bi-check"></i> Active</span>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-3">
+                                            <div class="profilepicture">
+                                                <img src="assets/img/2.jpg" alt="img" width="60">
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Jordan Nico</h6>
+                                                <small>nico@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Web Developer</td>
+                                    <td>Programmer</td>
+                                    <td>
+                                        <span class="badge badge-soft-warning">
+                                            <i class="bi bi-clock"></i> Paid Leave</span>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-3">
+                                            <div class="profilepicture">
+                                                <img src="assets/img/3.jpg" alt="img" width="60">
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Nadila Adja</h6>
+                                                <small>adja@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Project Manager</td>
+                                    <td>Human Resource</td>
+                                    <td>
+                                        <span class="badge badge-soft-info">
+                                            <i class="bi bi-check-all"></i> Standby</span>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-3">
+                                            <div class="profilepicture">
+                                                <img src="assets/img/4.jpg" alt="img" width="60">
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Tony Soap</h6>
+                                                <small>soap@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>UX Researcher</td>
+                                    <td>Product Design</td>
+                                    <td>
+                                        <span class="badge badge-soft-success">
+                                            <i class="bi bi-check"></i> Active</span>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-3">
+                                            <div class="profilepicture">
+                                                <img src="assets/img/5.jpg" alt="img" width="60">
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Samantha William</h6>
+                                                <small>wills@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>UI Designer</td>
+                                    <td>Engineering</td>
+                                    <td>
+                                        <span class="badge badge-soft-danger">
+                                            <i class="bi bi-x"></i> Cancel</span>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/6.jpg" alt="img" width="60">
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Jordan Nico</h6>
+                                                <small>nico@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Web Developer</td>
+                                    <td>Programmer</td>
+                                    <td>
+                                        <span class="badge badge-soft-info">
+                                            <i class="bi bi-check-all"></i> Standby</span>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Three  -->
+            <div class="card border-0 p-5">
+                <div
+                    class="card-header pb-5 bg-transparent border-0 d-flex align-items-center justify-content-between gap-3">
+                    <h4 class="mb-0">Candidate List</h4>
+                    <div class="ms-auto d-flex align-items-center gap-3">
+                        <div class="dropdown">
+                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu p-0">
+                                <a class="dropdown-item" href="#">View</a>
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table id="table-3" class="display text-center">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </th>
+                                    <th>Candidate</th>
+                                    <th>Position</th>
+                                    <th>Company</th>
+                                    <th>Score</th>
+                                    <th>Stage</th>
+                                    <th>Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/15.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6>Samantha William</h6>
+                                                <small>wills@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>UI Designer</h5>
+                                    </td>
+                                    <td>
+                                        <h5>Kleon Studio</h5>
+                                    </td>
+                                    <td><span class="donut-1"
+                                            data-peity='{ "fill": ["#F5F5F5", "#924AEF"],  "innerRadius": 14, "radius": 24 }'>1/4</span>
+                                    </td>
+                                    <td><span class="p-2 rounded-1 badge-soft-success"> <i
+                                                class="indicator success"></i>
+                                            High Match</span></td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="candidate.html">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/7.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6>Cahaya Hikari</h6>
+                                                <small>hikari@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>Web Developer</h5>
+                                    </td>
+                                    <td>
+                                        <h5>Portu Studio</h5>
+                                    </td>
+                                    <td><span class="donut-1"
+                                            data-peity='{ "fill": ["#F5F5F5", "#924AEF"],  "innerRadius": 14, "radius": 24 }'>2/4</span>
+                                    </td>
+                                    <td><span class="p-2 rounded-1 badge-soft-danger"> <i class="indicator danger"></i>
+                                            Unmatched</span></td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="candidate.html">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/13.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6>Nadila Adja</h6>
+                                                <small>adja@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>Web Developer</h5>
+                                    </td>
+                                    <td>
+                                        <h5>Portu Studio</h5>
+                                    </td>
+                                    <td><span class="donut-1"
+                                            data-peity='{ "fill": ["#F5F5F5", "#924AEF"],  "innerRadius": 14, "radius": 24 }'>7/10</span>
+                                    </td>
+                                    <td><span class="p-2 rounded-1 badge-soft-warning"> <i
+                                                class="indicator warning"></i>
+                                            Normal Match</span></td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="candidate.html">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/11.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6>Tony Soap</h6>
+                                                <small>soap@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>UX Researcher</h5>
+                                    </td>
+                                    <td>
+                                        <h5>Kleon Studio</h5>
+                                    </td>
+                                    <td><span class="donut-1"
+                                            data-peity='{ "fill": ["#F5F5F5", "#924AEF"],  "innerRadius": 14, "radius": 24 }'>2/4</span>
+                                    </td>
+                                    <td><span class="p-2 rounded-1 badge-soft-success"> <i
+                                                class="indicator success"></i>
+                                            High Match</span></td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="candidate.html">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/14.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6>Johnny Ahmad</h6>
+                                                <small>jomad@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>UI Designer</h5>
+                                    </td>
+                                    <td>
+                                        <h5>Glazey Studio</h5>
+                                    </td>
+                                    <td><span class="donut-1"
+                                            data-peity='{ "fill": ["#F5F5F5", "#924AEF"],  "innerRadius": 14, "radius": 24 }'>2/4</span>
+                                    </td>
+                                    <td><span class="p-2 rounded-1 badge-soft-success"> <i
+                                                class="indicator success"></i>
+                                            High Match</span></td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="candidate.html">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/5.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6>Jordan Nico</h6>
+                                                <small>nico@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>Web Researcher</h5>
+                                    </td>
+                                    <td>
+                                        <h5>Frize Studio</h5>
+                                    </td>
+                                    <td><span class="donut-1"
+                                            data-peity='{ "fill": ["#F5F5F5", "#924AEF"],  "innerRadius": 14, "radius": 24 }'>4/10</span>
+                                    </td>
+                                    <td><span class="p-2 rounded-1 badge-soft-danger"> <i class="indicator danger"></i>
+                                            Unmatched</span></td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="candidate.html">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/6.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6>Nadila Adja</h6>
+                                                <small>adja@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>Web Developer</h5>
+                                    </td>
+                                    <td>
+                                        <h5>Kleon Studio</h5>
+                                    </td>
+                                    <td><span class="donut-1"
+                                            data-peity='{ "fill": ["#F5F5F5", "#924AEF"],  "innerRadius": 14, "radius": 24 }'>1/4</span>
+                                    </td>
+                                    <td><span class="p-2 rounded-1 badge-soft-warning"> <i
+                                                class="indicator warning"></i>
+                                            Normal Match</span></td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="candidate.html">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/7.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6>Samantha William</h6>
+                                                <small>wills@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>UI Designer</h5>
+                                    </td>
+                                    <td>
+                                        <h5>Kleon Studio</h5>
+                                    </td>
+                                    <td><span class="donut-1"
+                                            data-peity='{ "fill": ["#F5F5F5", "#924AEF"],  "innerRadius": 14, "radius": 24 }'>1/4</span>
+                                    </td>
+                                    <td><span class="p-2 rounded-1 badge-soft-success"> <i
+                                                class="indicator success"></i>
+                                            High Match</span></td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="candidate.html">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/9.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6>Cahaya Hikari</h6>
+                                                <small>hikari@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>Web Developer</h5>
+                                    </td>
+                                    <td>
+                                        <h5>Portu Studio</h5>
+                                    </td>
+                                    <td><span class="donut-1"
+                                            data-peity='{ "fill": ["#F5F5F5", "#924AEF"],  "innerRadius": 14, "radius": 24 }'>2/4</span>
+                                    </td>
+                                    <td><span class="p-2 rounded-1 badge-soft-danger"> <i class="indicator danger"></i>
+                                            Unmatched</span></td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="candidate.html">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/11.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6>Nadila Adja</h6>
+                                                <small>adja@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>Web Developer</h5>
+                                    </td>
+                                    <td>
+                                        <h5>Portu Studio</h5>
+                                    </td>
+                                    <td><span class="donut-1"
+                                            data-peity='{ "fill": ["#F5F5F5", "#924AEF"],  "innerRadius": 14, "radius": 24 }'>7/10</span>
+                                    </td>
+                                    <td><span class="p-2 rounded-1 badge-soft-warning"> <i
+                                                class="indicator warning"></i>
+                                            Normal Match</span></td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="candidate.html">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/4.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6>Tony Soap</h6>
+                                                <small>soap@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>UX Researcher</h5>
+                                    </td>
+                                    <td>
+                                        <h5>Kleon Studio</h5>
+                                    </td>
+                                    <td><span class="donut-1"
+                                            data-peity='{ "fill": ["#F5F5F5", "#924AEF"],  "innerRadius": 14, "radius": 24 }'>2/4</span>
+                                    </td>
+                                    <td><span class="p-2 rounded-1 badge-soft-success"> <i
+                                                class="indicator success"></i>
+                                            High Match</span></td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="candidate.html">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/3.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6>Johnny Ahmad</h6>
+                                                <small>jomad@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>UI Designer</h5>
+                                    </td>
+                                    <td>
+                                        <h5>Glazey Studio</h5>
+                                    </td>
+                                    <td><span class="donut-1"
+                                            data-peity='{ "fill": ["#F5F5F5", "#924AEF"],  "innerRadius": 14, "radius": 24 }'>2/4</span>
+                                    </td>
+                                    <td><span class="p-2 rounded-1 badge-soft-success"> <i
+                                                class="indicator success"></i>
+                                            High Match</span></td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="candidate.html">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/2.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6>Jordan Nico</h6>
+                                                <small>nico@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>Web Researcher</h5>
+                                    </td>
+                                    <td>
+                                        <h5>Frize Studio</h5>
+                                    </td>
+                                    <td><span class="donut-1"
+                                            data-peity='{ "fill": ["#F5F5F5", "#924AEF"],  "innerRadius": 14, "radius": 24 }'>4/10</span>
+                                    </td>
+                                    <td><span class="p-2 rounded-1 badge-soft-danger"> <i class="indicator danger"></i>
+                                            Unmatched</span></td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="candidate.html">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/1.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6>Nadila Adja</h6>
+                                                <small>adja@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>Web Developer</h5>
+                                    </td>
+                                    <td>
+                                        <h5>Kleon Studio</h5>
+                                    </td>
+                                    <td><span class="donut-1"
+                                            data-peity='{ "fill": ["#F5F5F5", "#924AEF"],  "innerRadius": 14, "radius": 24 }'>1/4</span>
+                                    </td>
+                                    <td><span class="p-2 rounded-1 badge-soft-warning"> <i
+                                                class="indicator warning"></i>
+                                            Normal Match</span></td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="candidate.html">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Four  -->
+            <div class="card border-0 p-5">
+                <div
+                    class="card-header pb-5 bg-transparent border-0 d-flex align-items-center justify-content-between gap-3">
+                    <h4 class="mb-0">Request Leave</h4>
+                    <div class="ms-auto d-flex align-items-center gap-3">
+                        <div class="dropdown">
+                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu p-0">
+                                <a class="dropdown-item" href="#">View</a>
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table id="table-4" class="display text-center">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </th>
+                                    <th>Candidate</th>
+                                    <th>Position</th>
+                                    <th>Leave Type</th>
+                                    <th>Duration</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/12.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Samantha William</h6>
+                                                <small>wills@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="description">
+                                            <h6 class="mb-0">UI Designer</h6>
+                                            <small>Product Design Team</small>
+                                        </div>
+                                    </td>
+                                    <td>Personal Leave</td>
+                                    <td>January 1 - January 7, 2022</td>
+                                    <td><span class="btn btn-outline-danger"> Disapprove</span> <span
+                                            class="btn btn-primary"> Approve</span></td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/13.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Jordan Nico</h6>
+                                                <small>nico@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="description">
+                                            <h6 class="mb-0">UI Designer</h6>
+                                            <small>Product Design Team</small>
+                                        </div>
+                                    </td>
+                                    <td>Personal Leave</td>
+                                    <td>January 1 - January 7, 2022</td>
+                                    <td><span class="btn btn-outline-danger"> Disapprove</span> <span
+                                            class="btn btn-primary"> Approve</span></td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/14.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Nadila Adja</h6>
+                                                <small>adja@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="description">
+                                            <h6 class="mb-0">UI Designer</h6>
+                                            <small>Product Design Team</small>
+                                        </div>
+                                    </td>
+                                    <td>Personal Leave</td>
+                                    <td>January 1 - January 7, 2022</td>
+                                    <td><span class="btn btn-outline-danger"> Disapprove</span> <span
+                                            class="btn btn-primary"> Approve</span></td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/15.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Tony Soap</h6>
+                                                <small>soap@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="description">
+                                            <h6 class="mb-0">UI Designer</h6>
+                                            <small>Product Design Team</small>
+                                        </div>
+                                    </td>
+                                    <td>Personal Leave</td>
+                                    <td>January 1 - January 7, 2022</td>
+                                    <td><span class="btn btn-outline-danger"> Disapprove</span> <span
+                                            class="btn btn-primary"> Approve</span></td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/1.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Samantha William</h6>
+                                                <small>wills@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="description">
+                                            <h6 class="mb-0">UI Designer</h6>
+                                            <small>Product Design Team</small>
+                                        </div>
+                                    </td>
+                                    <td>Personal Leave</td>
+                                    <td>January 1 - January 7, 2022</td>
+                                    <td><span class="btn btn-outline-danger"> Disapprove</span> <span
+                                            class="btn btn-primary"> Approve</span></td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/2.jpg" alt="img" width="50">
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Jordan Nico</h6>
+                                                <small>nico@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="description">
+                                            <h6 class="mb-0">UI Designer</h6>
+                                            <small>Product Design Team</small>
+                                        </div>
+                                    </td>
+                                    <td>Personal Leave</td>
+                                    <td>January 1 - January 7, 2022</td>
+                                    <td><span class="btn btn-outline-danger"> Disapprove</span> <span
+                                            class="btn btn-primary"> Approve</span></td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Five  -->
+            <div class="card border-0 p-5">
+                <div
+                    class="card-header pb-5 bg-transparent border-0 d-flex align-items-center justify-content-between gap-3">
+                    <h4 class="mb-0">Product Design Team</h4>
+                    <div class="ms-auto d-flex align-items-center gap-3">
+                        <div class="dropdown">
+                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu p-0">
+                                <a class="dropdown-item" href="#">View</a>
+                                <a class="dropdown-item" href="#">Edit</a>
+                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table id="table-5" class="display text-center w-100">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="form-check-input" id="checkbox1" value="">
+                                    </th>
+                                    <th>Employee</th>
+                                    <th>Role</th>
+                                    <th>Last Modified</th>
+                                    <th>Storage</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <!-- table body start -->
+                            <tbody>
+                                <!-- row start -->
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="" />
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/5.jpg" alt="img" width="50" />
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Samantha William</h6>
+                                                <small>wills@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">UI Designer</p>
+                                        <small class="fw-semibold text-gray">Product Design Team</small>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-between gap-4">
+                                            <div class="progress flex-grow-1 rounded-1 bg-light-200" role="progressbar"
+                                                aria-label="progress" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-primary rounded-1" style="width: 50%">
+                                                </div>
+                                            </div>
+                                            <div class="ff-heading fs-16 fw-semibold">50%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- row start -->
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="" />
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/6.jpg" alt="img" width="50" />
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Jordan Nico</h6>
+                                                <small>nico@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">Web Developer</p>
+                                        <small class="fw-semibold text-gray">Development Team</small>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-between gap-4">
+                                            <div class="progress flex-grow-1 rounded-1 bg-light-200" role="progressbar"
+                                                aria-label="progress" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-success bg-gradient rounded-1"
+                                                    style="width: 25%"></div>
+                                            </div>
+                                            <div class="ff-heading fs-16 fw-semibold">25%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- row start -->
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="" />
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/7.jpg" alt="img" width="50" />
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Nadila Adja</h6>
+                                                <small>adja@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">Project Manager</p>
+                                        <small class="fw-semibold text-gray">Product Design Team</small>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-between gap-4">
+                                            <div class="progress flex-grow-1 rounded-1 bg-light-200" role="progressbar"
+                                                aria-label="progress" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-secondary bg-gradient rounded-1"
+                                                    style="width: 70%"></div>
+                                            </div>
+                                            <div class="ff-heading fs-16 fw-semibold">70%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- row start -->
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="" />
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/8.jpg" alt="img" width="50" />
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Tony Soap</h6>
+                                                <small>soap@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">UX Researcher</p>
+                                        <small class="fw-semibold text-gray">Research Team</small>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-between gap-4">
+                                            <div class="progress flex-grow-1 rounded-1 bg-light-200" role="progressbar"
+                                                aria-label="progress" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-warning bg-gradient rounded-1"
+                                                    style="width: 45%"></div>
+                                            </div>
+                                            <div class="ff-heading fs-16 fw-semibold">45%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- row start -->
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="" />
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/9.jpg" alt="img" width="50" />
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Johnny Ahmad</h6>
+                                                <small>jomad@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">UI Designer</p>
+                                        <small class="fw-semibold text-gray">Product Design Team</small>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-between gap-4">
+                                            <div class="progress flex-grow-1 rounded-1 bg-light-200" role="progressbar"
+                                                aria-label="progress" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-info bg-gradient rounded-1"
+                                                    style="width: 80%">
+                                                </div>
+                                            </div>
+                                            <div class="ff-heading fs-16 fw-semibold">80%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- row start -->
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="" />
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/10.jpg" alt="img" width="50" />
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Samantha William</h6>
+                                                <small>wills@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">UI Designer</p>
+                                        <small class="fw-semibold text-gray">Product Design Team</small>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-between gap-4">
+                                            <div class="progress flex-grow-1 rounded-1 bg-light-200" role="progressbar"
+                                                aria-label="progress" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-primary rounded-1" style="width: 50%">
+                                                </div>
+                                            </div>
+                                            <div class="ff-heading fs-16 fw-semibold">50%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- row start -->
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="" />
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/11.jpg" alt="img" width="50" />
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Jordan Nico</h6>
+                                                <small>nico@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">UI Designer</p>
+                                        <small class="fw-semibold text-gray">Product Design Team</small>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-between gap-4">
+                                            <div class="progress flex-grow-1 rounded-1 bg-light-200" role="progressbar"
+                                                aria-label="progress" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-success bg-gradient rounded-1"
+                                                    style="width: 25%"></div>
+                                            </div>
+                                            <div class="ff-heading fs-16 fw-semibold">25%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- row start -->
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="" />
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/12.jpg" alt="img" width="50" />
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Nadila Adja</h6>
+                                                <small>adja@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">UI Designer</p>
+                                        <small class="fw-semibold text-gray">Product Design Team</small>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-between gap-4">
+                                            <div class="progress flex-grow-1 rounded-1 bg-light-200" role="progressbar"
+                                                aria-label="progress" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-secondary bg-gradient rounded-1"
+                                                    style="width: 70%"></div>
+                                            </div>
+                                            <div class="ff-heading fs-16 fw-semibold">70%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- row start -->
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="" />
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/13.jpg" alt="img" width="50" />
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Tony Soap</h6>
+                                                <small>soap@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">UI Designer</p>
+                                        <small class="fw-semibold text-gray">Product Design Team</small>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-between gap-4">
+                                            <div class="progress flex-grow-1 rounded-1 bg-light-200" role="progressbar"
+                                                aria-label="progress" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-warning bg-gradient rounded-1"
+                                                    style="width: 45%"></div>
+                                            </div>
+                                            <div class="ff-heading fs-16 fw-semibold">45%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- row start -->
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="" />
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/14.jpg" alt="img" width="50" />
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Johnny Ahmad</h6>
+                                                <small>jomad@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">UI Designer</p>
+                                        <small class="fw-semibold text-gray">Product Design Team</small>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-between gap-4">
+                                            <div class="progress flex-grow-1 rounded-1 bg-light-200" role="progressbar"
+                                                aria-label="progress" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-info bg-gradient rounded-1"
+                                                    style="width: 80%">
+                                                </div>
+                                            </div>
+                                            <div class="ff-heading fs-16 fw-semibold">80%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- row start -->
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="" />
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/15.jpg" alt="img" width="50" />
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Samantha William</h6>
+                                                <small>wills@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">UI Designer</p>
+                                        <small class="fw-semibold text-gray">Product Design Team</small>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-between gap-4">
+                                            <div class="progress flex-grow-1 rounded-1 bg-light-200" role="progressbar"
+                                                aria-label="progress" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-primary rounded-1" style="width: 50%">
+                                                </div>
+                                            </div>
+                                            <div class="ff-heading fs-16 fw-semibold">50%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- row start -->
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="" />
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/1.jpg" alt="img" width="50" />
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Jordan Nico</h6>
+                                                <small>nico@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">UI Designer</p>
+                                        <small class="fw-semibold text-gray">Product Design Team</small>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-between gap-4">
+                                            <div class="progress flex-grow-1 rounded-1 bg-light-200" role="progressbar"
+                                                aria-label="progress" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-success bg-gradient rounded-1"
+                                                    style="width: 25%"></div>
+                                            </div>
+                                            <div class="ff-heading fs-16 fw-semibold">25%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- row start -->
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="" />
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/2.jpg" alt="img" width="50" />
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Nadila Adja</h6>
+                                                <small>adja@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">UI Designer</p>
+                                        <small class="fw-semibold text-gray">Product Design Team</small>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-between gap-4">
+                                            <div class="progress flex-grow-1 rounded-1 bg-light-200" role="progressbar"
+                                                aria-label="progress" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-secondary bg-gradient rounded-1"
+                                                    style="width: 70%"></div>
+                                            </div>
+                                            <div class="ff-heading fs-16 fw-semibold">70%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- row start -->
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="" />
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/3.jpg" alt="img" width="50" />
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Tony Soap</h6>
+                                                <small>soap@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">UI Designer</p>
+                                        <small class="fw-semibold text-gray">Product Design Team</small>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-between gap-4">
+                                            <div class="progress flex-grow-1 rounded-1 bg-light-200" role="progressbar"
+                                                aria-label="progress" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-warning bg-gradient rounded-1"
+                                                    style="width: 45%"></div>
+                                            </div>
+                                            <div class="ff-heading fs-16 fw-semibold">45%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- row start -->
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="form-check-input" name="checkbox1" value="" />
+                                    </td>
+                                    <td>
+                                        <div class="employee d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/4.jpg" alt="img" width="50" />
+                                            </div>
+                                            <div class="description">
+                                                <h6 class="mb-0">Johnny Ahmad</h6>
+                                                <small>jomad@mail.com</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="mb-0">UI Designer</p>
+                                        <small class="fw-semibold text-gray">Product Design Team</small>
+                                    </td>
+                                    <td>June 1, 2020</td>
+                                    <td>
+                                        <div class="d-flex align-items-center justify-content-between gap-4">
+                                            <div class="progress flex-grow-1 rounded-1 bg-light-200" role="progressbar"
+                                                aria-label="progress" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-info bg-gradient rounded-1"
+                                                    style="width: 80%">
+                                                </div>
+                                            </div>
+                                            <div class="ff-heading fs-16 fw-semibold">80%</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="#">View</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Six -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 p-5 pb-0">
+                    <h4 class="mb-0">Latest Invoice Payment</h4>
+                </div>
+
+                <div class="card-body pt-2">
+                    <div class="table-responsive">
+                        <table id="table-6" class="display text-center">
+                            <thead>
+                                <tr>
+                                    <th>Invoice No</th>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/clients/1.jpg" alt="img">
+                                            </div>
+                                            <div>
+                                                <a href="invoice.html" class="fs-14 fw-semibold">#INV-0001234</a>
+                                                <h6 class="fw-semibold mb-0">Jean Graphic Inc.</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <i class="bi bi-bookmark-check-fill text-gray"></i>
+                                            <div>
+                                                <p class="fs-14 fw-semibold text-dark mb-0">Amount</p>
+                                                <h5 class="fs-20 mb-0">$ 650,036.34</h5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="fs-14 text-gray mb-0">2m ago</p>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="invoice.html"><i
+                                                        class="bi bi-eye"></i></a>
+                                                <a class="dropdown-item" href="invoice-new.html"><i
+                                                        class="bi bi-download"></i></a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/clients/2.jpg" alt="img">
+                                            </div>
+                                            <div>
+                                                <a href="invoice.html" class="fs-14 fw-semibold">#INV-0001235</a>
+                                                <h6 class="fw-semibold mb-0">Higspeed Studios</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <i class="bi bi-bookmark-check-fill text-gray"></i>
+                                            <div>
+                                                <p class="fs-14 fw-semibold text-dark mb-0">Amount</p>
+                                                <h5 class="fs-20 mb-0">$ 178.34</h5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="fs-14 text-gray mb-0">12m ago</p>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="invoice.html"><i
+                                                        class="bi bi-eye"></i></a>
+                                                <a class="dropdown-item" href="invoice-new.html"><i
+                                                        class="bi bi-download"></i></a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/clients/3.jpg" alt="img">
+                                            </div>
+                                            <div>
+                                                <a href="invoice.html" class="fs-14 fw-semibold">#INV-0001236</a>
+                                                <h6 class="fw-semibold mb-0">Fullspeedo Crew</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <i class="bi bi-bookmark-check-fill text-gray"></i>
+                                            <div>
+                                                <p class="fs-14 fw-semibold text-dark mb-0">Amount</p>
+                                                <h5 class="fs-20 mb-0">$ 326.34</h5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="fs-14 text-gray mb-0">6h ago</p>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="invoice.html"><i
+                                                        class="bi bi-eye"></i></a>
+                                                <a class="dropdown-item" href="invoice-new.html"><i
+                                                        class="bi bi-download"></i></a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/clients/4.jpg" alt="img">
+                                            </div>
+                                            <div>
+                                                <a href="invoice.html" class="fs-14 fw-semibold">#INV-0001237</a>
+                                                <h6 class="fw-semibold mb-0">Wedeloper Team</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <i class="bi bi-bookmark-check-fill text-gray"></i>
+                                            <div>
+                                                <p class="fs-14 fw-semibold text-dark mb-0">Amount</p>
+                                                <h5 class="fs-20 mb-0">$ 50,036.34</h5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="fs-14 text-gray mb-0">18h ago</p>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="invoice.html"><i
+                                                        class="bi bi-eye"></i></a>
+                                                <a class="dropdown-item" href="invoice-new.html"><i
+                                                        class="bi bi-download"></i></a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex gap-2 flex-wrap">
+                                            <div class="profilepicture flex-shrink-0 d-none d-xl-block">
+                                                <img src="assets/img/clients/5.jpg" alt="img">
+                                            </div>
+                                            <div>
+                                                <a href="invoice.html" class="fs-14 fw-semibold">#INV-0001238</a>
+                                                <h6 class="fw-semibold mb-0">Humbly Humble</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex gap-2">
+                                            <i class="bi bi-bookmark-check-fill text-gray"></i>
+                                            <div>
+                                                <p class="fs-14 fw-semibold text-dark mb-0">Amount</p>
+                                                <h5 class="fs-20 mb-0">$ 23,936.34</h5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="fs-14 text-gray mb-0">Yesterday, 07:03 AM</p>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </a>
+                                            <div class="dropdown-menu p-0">
+                                                <a class="dropdown-item" href="invoice.html"><i
+                                                        class="bi bi-eye"></i></a>
+                                                <a class="dropdown-item" href="invoice-new.html"><i
+                                                        class="bi bi-download"></i></a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
