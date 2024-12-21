@@ -13,6 +13,9 @@ const productRouter = require('./routes/product');
 const ledgerRouter = require('./routes/ledger');
 
 
+// Serve static files from the "public" folder
+app.use('/invoiceSystem', express.static(__dirname + '/assets'));
+
 
 connectMongoDb('mongodb://localhost:27017/invoicesDb');
 
