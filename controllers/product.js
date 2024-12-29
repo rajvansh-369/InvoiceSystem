@@ -8,7 +8,8 @@ module.exports = {
     getProduct,
     updateProduct,
     editProdut,
-    createProduct
+    createProduct,
+    getProductAPI,
 }
 
 
@@ -107,5 +108,17 @@ async function createProduct(req, res) {
     } else {
         res.json({ success: false, message: 'Record not found' });
     }
+}
+
+
+async function getProductAPI(req, res) {
+
+    try {
+        const allProduct = await Product.find().sort({ name: 1 });
+        res.json({ success: true, data: allProduct }); // Send data as JSON
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to fetch Products', error: error.message });
+    }
+
 }
 

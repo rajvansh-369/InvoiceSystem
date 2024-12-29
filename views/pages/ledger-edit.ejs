@@ -1,0 +1,422 @@
+<% layout('layouts/app') %>
+    <div class="container-fluid">
+        <div class="inner-contents">
+            <div class="page-header d-flex align-items-center justify-content-between mr-bottom-30">
+                <div class="left-part">
+                    <h2 class="text-dark">New Invoice</h2>
+                    <p class="text-gray mb-0">Lorem ipsum dolor sit amet </p>
+                </div>
+                <div class="right-part d-flex align-items-center gap-4">
+                    <form class="search-form w-auto" action="search.php">
+                        <input type="text" name="search" class=" bg-white form-control" placeholder="Search">
+                        <button type="submit" class="btn"><img src="/invoiceSystem/assets/img/svg/search.svg"
+                                alt=""></button>
+                    </form>
+                </div>
+            </div>
+
+            <form id="invoice-form" method="post">
+                <div class="card border-0 p-5">
+                    <div
+                        class="card-header pb-5 bg-transparent border-0 d-flex align-items-center justify-content-between gap-3">
+                        <h4 class="mb-0"> <a href="invoices.html" class=" d-flex align-items-center text-dark"><i
+                                    class="bi bi-arrow-left-short fs-36 me-3 d-inline-block"></i> New Invoices</a></h4>
+                        <div class="ms-auto d-flex align-items-center gap-3">
+                            <div class="dropdown">
+                                <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </a>
+                                <div class="dropdown-menu p-0">
+                                    <a class="dropdown-item" href="#">View</a>
+                                    <a class="dropdown-item" href="#">Edit</a>
+                                    <a class="dropdown-item text-danger" href="#">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-xxl-4 col-lg-5 pe-xxl-5 mb-6 mb-lg-0">
+                                <h6 class="text-gray-300 text-uppercase ls-1">Select Client</h6>
+                                <div class="shadow p-4 rounded-2">
+                                    <div class="rounded-2 border border-light-200 overflow-hidden">
+                                        <select class="kleon-select-search" id="customer_list">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <ul class="list-unstyled mr-top-40 mr-bottom-80">
+                                    <li class="mr-bottom-35">
+                                        <div class="d-flex gap-4">
+                                            <div
+                                                class="client--contact-icon flex-shrink-0 bg-soft-primary text-center rounded-circle mt-1">
+                                                <i class="bi bi-pin-map-fill"></i>
+                                            </div>
+                                            <div class="fs-14 fw-semibold">
+                                                <h6 class="text-gray-300 ls-1 text-uppercase mb-1">Address</h6>
+                                                <p class="mb-0">
+                                                    <%= result.customer.address %> ,
+                                                        <%= result.customer.city %>,
+                                                            <%= result.customer.state%>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="mr-bottom-35">
+                                        <div class="d-flex gap-4">
+                                            <div
+                                                class="client--contact-icon flex-shrink-0 bg-soft-primary text-center rounded-circle mt-1">
+                                                <i class="bi bi-envelope-fill"></i>
+                                            </div>
+                                            <div class="fs-14 fw-semibold">
+                                                <h6 class="text-gray-300 ls-1 text-uppercase mb-1">Email</h6>
+                                                <p class="mb-0">bigwindadmin@mail.com</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="d-flex gap-4">
+                                            <div
+                                                class="client--contact-icon flex-shrink-0 bg-soft-primary text-center rounded-circle mt-1">
+                                                <i class="bi bi-telephone-fill"></i>
+                                            </div>
+                                            <div class="fs-14 fw-semibold">
+                                                <h6 class="text-gray-300 ls-1 text-uppercase mb-1">Telephone</h6>
+                                                <p class="mb-0"> <a href="tel:91<%= result.customer.phone%>"> +91 <%=
+                                                            result.customer.phone%></a></p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <div class="shadow p-4 rounded-2">
+                                    <div class="form-group position-relative mb-0">
+                                        <input type="text"
+                                            class="flatpickr form-control fs-20 fw-bold text-uppercase text-dark bg-transparent pd-left-55"
+                                            name="calendar" placeholder="Invoice Date">
+                                        <div class="rounded-2 position-absolute top-50 translate-middle-y ms-3">
+                                            <i class="bi bi-calendar-check-fill fs-28"></i>
+                                        </div>
+                                        <div class="position-absolute top-50 translate-middle-y end-0 me-3">
+                                            <i class="bi bi-chevron-down text-primary fs-24"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xxl-8 col-lg-7">
+                                <div class="row row-cols-lg-2">
+                                    <div class="col">
+                                        <h6 class="text-gray-300 text-uppercase ls-1">Invoice No</h6>
+                                        <input type="text"
+                                            class="form-control ff-heading fs-18 fw-semibold text-dark w-100"
+                                            name="inv-id" placeholder="Input ID" value="#INV-000<%= result.bill_no%>"
+                                            required>
+                                    </div>
+
+                                    <div class="col">
+                                        <h6 class="text-gray-300 text-uppercase ls-1">Amount (USD)</h6>
+                                        <input type="text"
+                                            class="form-control ff-heading fs-18 fw-semibold text-dark w-100"
+                                            name="inv-id" placeholder="Input Amount" value="<%= new Intl.NumberFormat('en-US', { style: 'currency', currency: 'INR' }).format(result.total_amount) %>
+                                    " required>
+                                    </div>
+                                </div>
+
+                                <h4 class="text-dark mt-5">Item Description</h4>
+                                <div class="table invoice-item basic-repeater">
+                                    <div class="thead ff-heading fs-16 fw-bold text-gray-300 text-uppercase ls-1">
+                                        <div class="row">
+                                            <div class="col">Item Name</div>
+                                            <div class="col">Product Quantity</div>
+                                            <div class="col">Rate</div>
+                                            <div class="col">Amount</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tbody" data-repeater-list>
+                                        <% if (result.ledger_products.length> 0) { %>
+                                            <% result.ledger_products.forEach((item, index)=> { %>
+                                                <% item.product.forEach((row, subIndex)=> { %>
+
+                                                    <div
+                                                        class="row border-bottom border-1 border-light-200 position-relative">
+                                                        <div class="col">
+                                                            <select class="kleon-select-search product-list"
+                                                                id="product_list_<%= index %>_<%= subIndex %>"
+                                                                data-selected="<%= row.id %>">
+                                                            </select>
+                                                            <!-- <input type="text"
+                                                                class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1"
+                                                                 placeholder="Type description here..."
+                                                                value="<%= row.name %>"> -->
+                                                        </div>
+                                                        <div class="col">
+                                                            <input type="text"
+                                                                class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1 "
+                                                                placeholder="Duration..."
+                                                                value="<%= item.product_qty %>">
+                                                        </div>
+                                                        <div class="col">
+                                                            <input type="text"
+                                                                class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1"
+                                                                placeholder="Rate..." value="<%= item.product_price%>">
+                                                        </div>
+                                                        <div class="col">
+                                                            <input type="text"
+                                                                class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1"
+                                                                placeholder="Amount..."
+                                                                value="<%=  item.product_qty * item.product_price  %>">
+                                                        </div>
+                                                    </div>
+                                                    <% }); %>
+                                                        <% }); %>
+                                                            <% } %>
+                                                                <!-- New Product Entry -->
+                                                                <div
+                                                                    class="row border-bottom border-1 border-light-200 position-relative">
+                                                                    <div class="col">
+                                                                        <select
+                                                                            class="kleon-select-search new-product-list"
+                                                                            id="new_product_list">
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <input type="text"
+                                                                            class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1"
+                                                                            placeholder="Duration..."
+                                                                            id="new_product_qty">
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <input type="text"
+                                                                            class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1"
+                                                                            placeholder="Rate..."
+                                                                            id="new_product_price">
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <input type="text"
+                                                                            class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1"
+                                                                            placeholder="Amount..."
+                                                                            id="new_product_amount" readonly>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <button type="button" id="add_product"
+                                                                            class="btn btn-primary">Add Product</button>
+                                                                    </div>
+                                                                </div>
+                                    </div>
+                                    <div class="form-group mt-3 mb-0">
+                                        <button data-repeater-create type="button"
+                                            class="btn btn-outline-primary px-3 py-1 rounded-1">Add Item <i
+                                                class="bi bi-plus-circle ms-1"></i></button>
+                                    </div>
+                                </div>
+
+
+                                <!-- <h4 class="text-dark mt-5 mb-3">Attach Files</h4>
+                                <div id="dpz-multiple-files" class="dropzone file-upload bg-light-200 border-gray-200">
+                                    <div class="d-flex align-items-center gap-3 w-auto">
+                                        <div class="bg-primary rounded-2 p-3 w-auto">
+                                            <img src="/invoiceSystem/assets/img/svg/cloud-upload.svg" alt="img">
+                                        </div>
+                                        <div class="dz-message position-relative text-start" data-dz-message>
+                                            <p class="mb-0 fw-semibold text-dark">Upload Files</p>
+                                            <small class="mb-0 fw-semibold text-gray">PDF, DOC, PPT, JPG, PNG</small>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <div class="d-flex align-items-center gap-3 mr-top-65">
+                                    <button
+                                        class="btn btn-primary ff-heading fs-18 fw-bold text-uppercase py-2 m-0"><span
+                                            class="me-3"><i class="bi bi-save-fill"></i></span> Send Invoice</button>
+                                    <button
+                                        class="btn btn-outline-primary ff-heading fs-18 fw-bold text-uppercase py-2 m-0">Save
+                                        To Later</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="/invoiceSystem/assets/js/jquery-3.6.0.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+
+            const fp = flatpickr(".flatpickr", {
+                dateFormat: "d-M-Y",
+                enableTime: true,
+                allowInput: true,
+            });
+
+            fp.setDate(new Date(" <%= (result.invoice_date) %>"));
+
+
+            $.ajax({
+                url: '/customer/getCustomers', // Your API endpoint
+                type: 'POST',
+                dataType: 'json', // Expecting JSON response
+                success: function (response) {
+                    if (response.success) {
+                        const customerList = $('#customer_list');
+                        customerList.empty(); // Clear existing options
+                        // The ID from EJS to mark as selected
+                        const selectedCustomerId = <%= JSON.stringify(parseInt(result.customer.id)) %>;
+                response.data.forEach(customer => {
+                    if (selectedCustomerId == customer.id) {
+                        // Mark this option as selected
+                        // console.log(selectedCustomerId,customer.id );
+                        customerList.append(`<option value="${customer.id}" selected>${customer.name}</option>`);
+                    } else {
+                        // Add other options
+                        customerList.append(`<option value="${customer.id}">${customer.name}</option>`);
+                    }
+                });
+            } else {
+                console.error('Failed to fetch customers:', response.message);
+            }
+                },
+            error: function (xhr, status, error) {
+                console.error('AJAX Error:', status, error);
+            }
+            });
+
+
+        $('.product-list').each(function () {
+            const dropdown = $(this); // The current dropdown
+            const selectedProductId = dropdown.data('selected'); // Get the selected product ID from data attribute
+
+            $.ajax({
+                url: '/product/getProduct', // Your API endpoint
+                type: 'POST',
+                dataType: 'json', // Expecting JSON response
+                success: function (response) {
+                    if (response.success) {
+                        dropdown.empty(); // Clear existing options
+                        response.data.forEach(product => {
+                            if (selectedProductId == product.id) {
+                                // Mark this option as selected
+                                dropdown.append(`<option value="${product.id}" selected>${product.name}</option>`);
+                            } else {
+                                // Add other options
+                                dropdown.append(`<option value="${product.id}">${product.name}</option>`);
+                            }
+                        });
+                    } else {
+                        console.error('Failed to fetch products:', response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                }
+            });
+        });
+
+
+        // Populate the dropdown for the new product entry
+        function populateProductDropdown() {
+            $.ajax({
+                url: '/product/getProduct', // API to get product list
+                type: 'POST',
+                dataType: 'json', // Expecting JSON response
+                success: function (response) {
+                    if (response.success) {
+                        const dropdown = $('#new_product_list');
+                        dropdown.empty(); // Clear existing options
+                        response.data.forEach(product => {
+                            dropdown.append(`<option value="${product.id}">${product.name}</option>`);
+                        });
+                    } else {
+                        console.error('Failed to fetch products:', response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                }
+            });
+        }
+
+        // Call this function on page load to populate the dropdown
+        populateProductDropdown();
+
+        // Calculate the amount dynamically
+        $('#new_product_qty, #new_product_price').on('input', function () {
+            const qty = parseFloat($('#new_product_qty').val()) || 0;
+            const price = parseFloat($('#new_product_price').val()) || 0;
+            $('#new_product_amount').val(qty * price);
+        });
+
+
+        // Add product on button click
+        $('#add_product').on('click', function () {
+            const ledgerId = $('#ledger_id').val(); // Assuming ledger_id is stored in a hidden input or accessible field
+            const productId = $('#new_product_list').val();
+            const productQty = $('#new_product_qty').val();
+            const productPrice = $('#new_product_price').val();
+            const productAmount = $('#new_product_amount').val();
+
+            if (!ledgerId || !productId || !productQty || !productPrice) {
+                alert('Please fill in all fields!');
+                return;
+            }
+
+            // Send the data to the server for insertion
+            $.ajax({
+                url: '/product/addProduct', // API to add product
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    ledger_id: ledgerId,
+                    product_id: productId,
+                    product_qty: productQty,
+                    product_price: productPrice,
+                }),
+                success: function (response) {
+                    if (response.success) {
+                        alert('Product added successfully!');
+                        // Optionally append the new product to the UI (client-side)
+                        const newRow = `
+            <div class="row border-bottom border-1 border-light-200 position-relative">
+                <div class="col">
+                    <select class="kleon-select-search" disabled>
+                        <option value="${productId}" selected>${$('#new_product_list option:selected').text()}</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1"
+                        placeholder="Duration..." value="${productQty}" readonly>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1"
+                        placeholder="Rate..." value="${productPrice}" readonly>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1"
+                        placeholder="Amount..." value="${productAmount}" readonly>
+                </div>
+            </div>
+          `;
+                        $('.new-product-list').parent().after(newRow); // Append below the input fields
+                        // Reset the form fields
+                        $('#new_product_qty, #new_product_price, #new_product_amount').val('');
+                        $('#new_product_list').val('');
+                    } else {
+                        alert('Failed to add product: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error adding product:', status, error);
+                }
+            });
+        });
+        });
+    </script>

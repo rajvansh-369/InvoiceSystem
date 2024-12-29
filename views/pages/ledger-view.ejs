@@ -1,0 +1,195 @@
+<% layout('layouts/app') %>
+<div class="container-fluid">
+    <div class="inner-contents">
+        <div class="page-header d-flex align-items-start align-items-md-center justify-content-between mr-bottom-30">
+            <div class="left-part">
+                <h2 class="text-dark">Invoice</h2>
+                <p class="text-gray mb-0">Lorem ipsum  dolor sit amet </p>
+            </div>
+            <div class="right-part d-flex align-items-center gap-4 flex-wrap">
+                <form class="search-form w-auto" action="search.php">
+                    <input type="text" name="search" class=" bg-white form-control" placeholder="Search">
+                    <button type="submit" class="btn"><img src="/invoiceSystem/assets/img/svg/search.svg" alt=""></button>
+                </form>
+                <div>
+                    <a href="invoice-new.html" class="btn btn-primary ff-heading fs-18 fw-bold py-3"><span class="fs-21"><i class="bi bi-bookmark-plus-fill"></i></span> <i class="bi bi-plus"></i> New Invoice</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="printable-card" class="card border-0 p-3 p-md-5">
+            <div class="card-header pb-0 bg-transparent border-0 d-flex align-items-center justify-content-between gap-3 flex-wrap">
+                <h4 class="mb-0 fs-38 d-flex align-items-baseline gap-4 flex-wrap"> <a href="invoices.html" class="d-flex align-items-center text-dark"><i class="bi bi-arrow-left-circle-fill fs-28 text-gray me-5 d-inline-block"></i> Invoice</a> <span class="fs-24 text-gray">#INV-0001234</span></h4>
+                <div class="ms-xxl-auto d-flex align-items-cente gap-3">
+                    <div class="d-flex align-items-center gap-3 flex-wrap">
+                        <button class="btn btn-soft-info fs-16 fw-bold" type='button'><i class="bi bi-check2-all me-2"></i> Invoice Sent</button>
+                        <a href="/invoiceSystem/assets/img/kleon-invoice.pdf" class="btn btn-primary ff-heading fs-18 fw-semibold" download><i class="bi bi-download me-2"></i> Download</a>
+                        <button class="p-0 border-0 bg-transparent text-primary fs-24" type='button' onclick="printDiv('printable-card')"><i class="bi bi-printer-fill"></i></button>
+                        <div class="dropdown d-flex align-items-center">
+                            <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu p-0">
+                                <a class="dropdown-item" href="invoice-new.html">Edit</a>
+                                <a class="dropdown-item text-danger" href="#">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card-body p-2 p-md-6">
+
+                <div class="row mb-6">
+                    <div class="col-xxl-6 col-lg-6">
+                        <h6 class="text-gray-300 text-uppercase ls-1">From</h6>
+                        <div class="box d-flex align-items-start gap-5">
+                            <div class="rounded-5 overflow-hidden flex-shrink-0 d-none d-sm-block">
+                                <img src="/invoiceSystem/assets/img/company.jpg" alt="img" width="122" height="122">
+                            </div>
+                            <div class="mt-3">
+                                <h4 class="fs-28 text-dark mb-3">Kleon Dashboard</h4>
+                                <p class="text-dark mb-3">18 Guild Street London, EC2V 5PX <br>
+                                    <span class="fw-semibold">United Kingdom</span></p>
+                                <p class="d-flex align-items-center justify-content-between gap-2 flex-wrap"><span>kleonadmin@mail.com</span> <span>tel:(012) 3456 789</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xxl-6 col-lg-6">
+                        <h6 class="text-gray-300 text-uppercase ls-1">Client</h6>
+                        <div class="box d-flex align-items-start gap-5">
+                            <div class="rounded-5 overflow-hidden flex-shrink-0 d-none d-sm-block shadow">
+                                <img src="/invoiceSystem/assets/img/clients/10.jpg" alt="img" width="122" height="122">
+                            </div>
+                            <div class="mt-3">
+                                <h4 class="fs-28 text-dark mb-3">Circle Hunt Inc.</h4>
+                                <p class="text-dark mb-3">Franklin Avenue Street New York, ABC 5562<br>
+                                    <span class="fw-semibold">United State</span></p>
+                                <p class="d-flex align-items-center justify-content-between gap-2 flex-wrap"><span>circlehuntadmin@mail.com</span> <span>tel:(012) 3456 789</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gradient-border mb-6"></div>
+
+
+                <div class="row">
+                    <div class="col-xxl-4 col-lg-12 pe-xxl-5 mb-6 mb-xxl-0">
+                        <h6 class="text-gray-300 text-uppercase ls-1">Project Name</h6>
+                        <h4 class="fs-28 fw-semibold text-dark lh-44">Redesign landing page website for company profile</h4>
+                        
+                        
+                        <h6 class="text-gray-300 text-uppercase ls-1 mr-top-40">Due Date</h6>
+                        <h5 class="fw-semibold text-primary lh-33">Saturday October 24th, 2023</h5>
+                    </div>
+
+                    <div class="col-xxl-8 col-lg-12">
+                        <table class="table-responsive w-100 invoice-table">
+                            <thead>
+                                <tr>
+                                    <th><div class="ff-heading fs-16 fw-bold text-gray-300 text-uppercase ls-1">Item Description</div></th>
+                                    <th><div class="ff-heading fs-16 fw-bold text-gray-300 text-uppercase ls-1">Duration</div></th>
+                                    <th><div class="ff-heading fs-16 fw-bold text-gray-300 text-uppercase ls-1">Rate</div></th>
+                                    <th><div class="ff-heading fs-16 fw-bold text-gray-300 text-uppercase ls-1">Amount</div></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr class="border-bottom border-1 border-light-200">
+                                    <td>
+                                        <div class="ff-heading fs-18 fw-semibold text-dark w-100 py-2 px-2 px-md-0">Wireframing</div>
+                                    </td>
+                                    <td>
+                                        <div class="ff-heading fs-18 fw-semibold text-dark w-100 py-2 px-2 px-md-0">64h</div>
+                                    </td>
+                                    <td>
+                                        <div class="ff-heading fs-18 fw-semibold text-dark w-100 py-2 px-2 px-md-0">60.00</div>
+                                    </td>
+                                    <td>
+                                        <div class="ff-heading fs-18 fw-semibold text-dark w-100 py-2 px-2 px-md-0">$ 360.00</div>
+                                    </td>
+                                </tr>
+
+                                <tr class="border-bottom border-1 border-light-200">
+                                    <td>
+                                        <div class="ff-heading fs-18 fw-semibold text-dark w-100 py-2 px-2 px-md-0">App UI Design Phase 1</div>
+                                    </td>
+                                    <td>
+                                        <div class="ff-heading fs-18 fw-semibold text-dark w-100 py-2 px-2 px-md-0">441h</div>
+                                    </td>
+                                    <td>
+                                        <div class="ff-heading fs-18 fw-semibold text-dark w-100 py-2 px-2 px-md-0">35.00</div>
+                                    </td>
+                                    <td>
+                                        <div class="ff-heading fs-18 fw-semibold text-dark w-100 py-2 px-2 px-md-0">$ 15,435.00</div>
+                                    </td>
+                                </tr>
+
+                                <tr class="border-bottom border-1 border-light-200">
+                                    <td>
+                                        <div class="ff-heading fs-18 fw-semibold text-dark w-100 py-2 px-2 px-md-0">Desgin System</div>
+                                    </td>
+                                    <td>
+                                        <div class="ff-heading fs-18 fw-semibold text-dark w-100 py-2 px-2 px-md-0">12h</div>
+                                    </td>
+                                    <td>
+                                        <div class="ff-heading fs-18 fw-semibold text-dark w-100 py-2 px-2 px-md-0">75.00</div>
+                                    </td>
+                                    <td>
+                                        <div class="ff-heading fs-18 fw-semibold text-dark w-100 py-2 px-2 px-md-0">$ 900.00</div>
+                                    </td>
+                                </tr>
+
+                                <tr class="border-bottom border-1 border-light-200">
+                                    <td>
+                                        <div class="ff-heading fs-18 fw-semibold text-dark w-100 py-2 px-2 px-md-0">UX Writing</div>
+                                    </td>
+                                    <td>
+                                        <div class="ff-heading fs-18 fw-semibold text-dark w-100 py-2 px-2 px-md-0">54h</div>
+                                    </td>
+                                    <td>
+                                        <div class="ff-heading fs-18 fw-semibold text-dark w-100 py-2 px-2 px-md-0">22.00</div>
+                                    </td>
+                                    <td>
+                                        <div class="ff-heading fs-18 fw-semibold text-dark w-100 py-2 px-2 px-md-0">$ 1,188.00</div>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="ff-heading fs-16 fw-bold text-gray text-uppercase ls-1 w-100 py-2 mt-5">Subtotal</div>
+                                    </td>
+                                    <td colspan="2">
+                                        <div class="ff-heading fs-18 fw-normal text-dark text-uppercase w-100 py-2 mt-5">$17,883.00</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="ff-heading fs-16 fw-bold text-gray text-uppercase ls-1 w-100 py-2">Tax</div>
+                                    </td>
+                                    <td colspan="2">
+                                        <div class="ff-heading fs-18 fw-normal text-dark text-uppercase w-100 py-2">2%</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="ff-heading fs-16 fw-bold text-gray text-uppercase ls-1 w-100 py-2">Total</div>
+                                    </td>
+                                    <td colspan="2">
+                                        <div class="ff-heading fs-24 fw-bold text-dark text-uppercase w-100 py-2">$ 17,883.00</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="/invoiceSystem/assets/js/jquery-3.6.0.min.js"></script>

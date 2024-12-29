@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const newSchema = new mongoose.Schema(
     {
-        id: { type: Number, required: true, unique: true  },
+        id: { type: String, required: true, unique: true  },
         name: { type: String, required: true },
         price: { type: Number , required: false },
         nug: { type: Number , required: true },

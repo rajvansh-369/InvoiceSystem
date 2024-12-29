@@ -5,7 +5,8 @@ const Customer = require("../models/customer");
 
 
 module.exports = {
-    getCustomer
+    getCustomer,
+    getCustomerAPI,
 }
 
 async function getCustomer(req, res) {
@@ -15,6 +16,18 @@ async function getCustomer(req, res) {
     const items = ['Apple', 'Banana', 'Cherry', 'Date'];
     console.log(allCustomer);
     res.render('pages/customers', { allCustomer, items });
+
+}
+
+
+async function getCustomerAPI(req, res) {
+
+    try {
+        const allCustomer = await Customer.find().sort({ name: 1 });
+        res.json({ success: true, data: allCustomer }); // Send data as JSON
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to fetch customers', error: error.message });
+    }
 
 }
 
