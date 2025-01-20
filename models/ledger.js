@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const ledgerSchema = new mongoose.Schema(
   {
     id: { type: String,required: true, unique: true  }, // Normal integer IDc
-    customer_id: { type: Number, required: true }, // Normal integer IDc
+    customer_id: { type: String, required: true }, // Normal integer IDc
     bill_no: { type: String, required: true },
     total_amount: { type: Number, required: true },
     total_credit: { type: Number, required: true },

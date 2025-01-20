@@ -1,0 +1,253 @@
+<% layout('layouts/app') %>
+    <div class="container-fluid">
+        <div class="inner-contents">
+            <div class="page-header d-flex align-items-center justify-content-between mr-bottom-30">
+                <div class="left-part">
+                    <h2 class="text-dark">New Invoice</h2>
+                    <p class="text-gray mb-0">Lorem ipsum dolor sit amet </p>
+                </div>
+                <div class="right-part d-flex align-items-center gap-4">
+                    <form class="search-form w-auto" action="search.php">
+                        <input type="text" name="search" class=" bg-white form-control" placeholder="Search">
+                        <button type="submit" class="btn"><img src="/invoiceSystem/assets/img/svg/search.svg"
+                                alt=""></button>
+                    </form>
+                </div>
+            </div>
+
+            <form id="invoice-form" method="post">
+                <div class="card border-0 p-5">
+                    <div
+                        class="card-header pb-5 bg-transparent border-0 d-flex align-items-center justify-content-between gap-3">
+                        <h4 class="mb-0"> <a href="invoices.html" class=" d-flex align-items-center text-dark"><i
+                                    class="bi bi-arrow-left-short fs-36 me-3 d-inline-block"></i> New Invoices</a></h4>
+                        <div class="ms-auto d-flex align-items-center gap-3">
+                            <div class="dropdown">
+                                <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </a>
+                                <div class="dropdown-menu p-0">
+                                    <a class="dropdown-item" href="#">View</a>
+                                    <a class="dropdown-item" href="#">Edit</a>
+                                    <a class="dropdown-item text-danger" href="#">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-xxl-4 col-lg-5 pe-xxl-5 mb-6 mb-lg-0">
+                                <h6 class="text-gray-300 text-uppercase ls-1">Select Client</h6>
+                                <div class="shadow p-4 rounded-2">
+                                    <div class="rounded-2 border border-light-200 overflow-hidden">
+                                        <select class="kleon-select-search" id="customer_list">
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <ul class="list-unstyled mr-top-40 mr-bottom-80">
+                                    <li class="mr-bottom-35">
+                                        <div class="d-flex gap-4">
+                                            <div
+                                                class="client--contact-icon flex-shrink-0 bg-soft-primary text-center rounded-circle mt-1">
+                                                <i class="bi bi-pin-map-fill"></i>
+                                            </div>
+                                            <div class="fs-14 fw-semibold">
+                                                <h6 class="text-gray-300 ls-1 text-uppercase mb-1">Address</h6>
+                                                <p class="mb-0 address">
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="mr-bottom-35">
+                                        <div class="d-flex gap-4">
+                                            <div
+                                                class="client--contact-icon flex-shrink-0 bg-soft-primary text-center rounded-circle mt-1">
+                                                <i class="bi bi-envelope-fill"></i>
+                                            </div>
+                                            <div class="fs-14 fw-semibold">
+                                                <h6 class="text-gray-300 ls-1 text-uppercase mb-1">Email</h6>
+                                                <p class="mb-0 customer_email">bigwindadmin@mail.com</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="d-flex gap-4">
+                                            <div
+                                                class="client--contact-icon flex-shrink-0 bg-soft-primary text-center rounded-circle mt-1">
+                                                <i class="bi bi-telephone-fill"></i>
+                                            </div>
+                                            <div class="fs-14 fw-semibold">
+                                                <h6 class="text-gray-300 ls-1 text-uppercase mb-1">Telephone</h6>
+                                                <p class="mb-0" id="customer_phone"> <a href="tel:91"> +91</a></p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <!-- <div class="shadow p-4 rounded-2">
+                                    <div class="form-group position-relative mb-0">
+                                        <input type="text"
+                                            class="flatpickr form-control fs-20 fw-bold text-uppercase text-dark bg-transparent pd-left-55"
+                                            name="calendar" placeholder="Invoice Date" id="inv_date">
+                                        <div class="rounded-2 position-absolute top-50 translate-middle-y ms-3">
+                                            <i class="bi bi-calendar-check-fill fs-28"></i>
+                                        </div>
+                                        <div class="position-absolute top-50 translate-middle-y end-0 me-3">
+                                            <i class="bi bi-chevron-down text-primary fs-24"></i>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+
+                            <div class="col-xxl-8 col-lg-7">
+                                <div class="row row-cols-lg-2">
+                                    <div class="col">
+                                        <h6 class="text-gray-300 text-uppercase ls-1">Invoice No</h6>
+                                        <input type="text"
+                                            class="form-control ff-heading fs-18 fw-semibold text-dark w-100"
+                                            id="invoice_no" name="inv-id" placeholder="" value="<%= data.bill_no %>"
+                                            required>
+                                    </div>
+
+                                    <!-- <div class="col">
+                                        <h6 class="text-gray-300 text-uppercase ls-1">Amount (USD)</h6>
+                                        <input type="text"
+                                            class="form-control ff-heading fs-18 fw-semibold text-dark w-100"
+                                            name="inv-id" placeholder="" id="inv_amount" value="" required>
+                                    </div> -->
+                                </div>
+
+
+
+
+                                <!-- <h4 class="text-dark mt-5 mb-3">Attach Files</h4>
+                                <div id="dpz-multiple-files" class="dropzone file-upload bg-light-200 border-gray-200">
+                                    <div class="d-flex align-items-center gap-3 w-auto">
+                                        <div class="bg-primary rounded-2 p-3 w-auto">
+                                            <img src="/invoiceSystem/assets/img/svg/cloud-upload.svg" alt="img">
+                                        </div>
+                                        <div class="dz-message position-relative text-start" data-dz-message>
+                                            <p class="mb-0 fw-semibold text-dark">Upload Files</p>
+                                            <small class="mb-0 fw-semibold text-gray">PDF, DOC, PPT, JPG, PNG</small>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <div class="d-flex align-items-center gap-3 mr-top-65">
+                                    <button
+                                        class="btn btn-outline-primary ff-heading fs-18 fw-bold text-uppercase py-2 m-0"
+                                        id="add_product">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="/invoiceSystem/assets/js/jquery-3.6.0.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $.ajax({
+                url: '/customer/getCustomers', // Your API endpoint
+                type: 'POST',
+                dataType: 'json', // Expecting JSON response
+                success: function (response) {
+                    if (response.success) {
+                        const customerList = $('#customer_list');
+                        customerList.empty(); // Clear existing options
+                        // The ID from EJS to mark as selected
+
+                        response.data.forEach(customer => {
+                            // Add other options
+                            customerList.append(`<option value="${customer.id}">${customer.name}</option>`);
+                        });
+
+                    } else {
+                        console.error('Failed to fetch customers:', response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                }
+            });
+
+            $('#customer_list').on('change', function () {
+                console.log(this.value);
+                $.ajax({
+                    url: '/customer/getCustomerById', // Your API endpoint
+                    type: 'POST',
+                    dataType: 'json', // Expecting JSON response
+                    data: { customer_id: this.value.toString() },
+                    success: function (response) {
+
+                        console.log(response, "getCustomerById");
+                        if (response.success) {
+                            // const customerList = $('#customer_list');
+                            // customerList.empty(); // Clear existing options
+                            // The ID from EJS to mark as selected
+                            data = response.data
+                            $('.address').html(data.address + " " + data.city + " " + data.state)
+                            $('.customer_email').html(data.email)
+                            phone = ' <a href="tel:91' + data.phone + '"> +91 ' + data.phone + '</a>'
+                            $('#customer_phone').html(phone)
+                            // customerList.append(`<option value="${customer.id}">${customer.name}</option>`);
+
+
+                        } else {
+                            console.error('Failed to fetch customers:', response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('AJAX Error:', status, error);
+                    }
+                });
+
+            })
+
+
+            $('#add_product').on('click', function (event) {
+                   event.preventDefault(); // Prevent the default form submission
+                var invoice_no = $('#invoice_no').val();
+
+                $.ajax({
+                    url: '/ledger/create',
+                    type: 'POST',
+                    contentType: 'application/json', // Specify content type of request
+                    dataType: 'json', // Specify expected response type
+                    data: JSON.stringify({ invoice_no: invoice_no }), // Explicitly set the key
+                    success: function (response) {
+
+                        console.log(response);
+                        
+                        if(!response.success){
+
+                            alert(response.message)
+                        }
+
+                        
+
+                    },
+                    error: function (xhr, status, error) {
+
+                        console.error('AJAX Error:', status, error,xhr.message);
+
+                    }
+
+
+
+
+                })
+
+
+            });
+
+        });
+    </script>

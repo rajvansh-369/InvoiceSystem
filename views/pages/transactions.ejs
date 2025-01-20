@@ -19,10 +19,10 @@
             <div class="card border-0 p-5">
                 <div
                     class="card-header pb-5 bg-transparent border-0 d-flex align-items-center justify-content-between gap-3">
-                    <h4 class="mb-0">Ledgers</h4>
+                    <h4 class="mb-0">Products</h4>
                     <div class="ms-auto d-flex align-items-center gap-3">
 
-                        <a href="ledger/create" >
+                        <a data-bs-target="#create_product" data-bs-toggle="modal">
 
                             <button class="btn btn-gray"> Create</button>
                         </a>
@@ -47,20 +47,19 @@
                                 <tr>
                                     <th><input type="checkbox" class="form-check-input" id="checkbox1" value="">
                                     </th>
-                                    <th>Customer Name</th>
-                                    <th>Total Amount</th>
-                                    <th>Bill No</th>
-                                    <th>Is Paid</th>
-                                    <th>Total Due</th>
-                                    <th>Total Credit</th>
-                                    <th>Interest Amount</th>
-                                    <th>Phone</th>
+                                    <th>Name</th>
+                                    <th>KG/NUG</th>
+
+                                    <!-- <th>Net Weight</th>
+                                    <th>Gross Weight</th>
+                                    <th>Peti</th> -->
+                                    <!-- <th>Country</th> -->
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% if (allLedger.length> 0) { %>
-                                    <% allLedger.forEach((item, index)=> { %>
+                                <% if (allTransaction.length> 0) { %>
+                                    <% allTransaction.forEach((item, index)=> { %>
                                         <tr>
                                             <td>
                                                 <input type="checkbox" class="form-check-input" id="checkbox1" value="">
@@ -69,7 +68,7 @@
                                                 <div class="employee d-flex gap-1 flex-wrap">
                                                     <div class="description">
                                                         <h6>
-                                                            <%= item.customer_details.name ?? "" %>
+                                                            <%= item.name %>
                                                         </h6> <!-- Assuming 'item.name' contains the customer's name -->
                                                         <!-- <small>
                                                             <%= item.price %>
@@ -79,49 +78,31 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <%= item.total_amount %>
+                                                <%= item.nug %>
                                             </td>
 
-                                          
+                                            <!-- <td>
+                                                <a href="#" title="<%=  item.address %>">
+                                                    <%= item.net_weight %>
+                                                </a>
+                                            </td>
+                                            <td><span class="indicator active"></span> Active</td>
                                             <td>
-                                                <%= item.bill_no %>
+                                                <%= item.gross_weight %>
                                             </td>
-
-                                          
                                             <td>
-                                                <%= item.is_paid %>
-                                            </td>
-
-                                          
-                                            <td>
-                                                <%= item.total_due %>
-                                            </td>
-
-                                          
-                                            <td>
-                                                <%= item.total_credit %>
-                                            </td>
-
-                                          
-                                            <td>
-                                                <%= item.interest_amount %>
-                                            </td>
-
-                                          
-                                            <td>
-                                                <%= item.customer_details.phone ?? "" %>
-                                                
-                                            </td>
-
-                                          
+                                                <%= item.peti %>
+                                            </td> -->
                                             <td>
                                                 <div class="dropdown">
                                                     <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
                                                         <i class="bi bi-three-dots-vertical"></i>
                                                     </a>
                                                     <div class="dropdown-menu p-0">
-                                                        <a class="dropdown-item" target="_blank" href="ledger/view/<%= item.id %>">View</a>
-                                                        <a class="dropdown-item edit-btn" target="_blank" href="ledger/edit/<%= item.id %>">Edit</a>
+                                                        <a class="dropdown-item" href="#">View</a>
+                                                        <a class="dropdown-item edit-btn" href="#"
+                                                            data-id="<%= item.id %>" data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModal">Edit</a>
                                                         <a class="dropdown-item text-danger" href="#">Delete</a>
                                                     </div>
                                                 </div>
@@ -162,7 +143,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
                                                         <input type="hidden" id="record-id" name="id">
-                                                        <label class="form-label">Ledger Name</label>
+                                                        <label class="form-label">Product Name</label>
                                                         <input type="text" id="product_name" class="form-control"
                                                             name="product_name" value="" placeholder="Full Name">
                                                     </div>
@@ -191,7 +172,53 @@
                             <!-- </div> -->
                         </div>
 
-      
+                        <!-- Modal Create Product -->
+                        <div class="modal fade" id="create_product" tabindex="-1" aria-labelledby="create_productLabel"
+                            aria-hidden="true">
+                            <!-- <div class="modal"> -->
+                            <!-- Use "fade" instead "position-static d-block" for modal action-->
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="ModalLabel">Modal title</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form class="" method="post">
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <input type="hidden" id="record-id" name="id">
+                                                        <label class="form-label">Product Name</label>
+                                                        <input type="text" id="create_product_name" class="form-control"
+                                                            name="product_name" value=""
+                                                            placeholder="Full Product Name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Weight per NUG (KG)*</label>
+                                                        <!-- <small class="text-muted">eg: admin@email.com</small> -->
+                                                        <input id="create_nug" type="number" class="form-control"
+                                                            name="nug" placeholder="00" required="">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-warning btn-sm  px-2"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button id="create-form" type="button"
+                                                class="btn btn-success btn-sm  px-2">Save
+                                                changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- </div> -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -201,7 +228,7 @@
     <script>
 
 
-        function getLedger(id) {
+        function getProduct(id) {
 
             var product_name = $('#product_name').val();
             var nug = $('#nug').val();
@@ -335,6 +362,6 @@
                     $('#editModal').hide();
                 }
             });
-
+        });
 
     </script>

@@ -34,7 +34,7 @@ $(document).on('click', '#sweet-info', function(e) {
 $(document).on('click', '#sweet-question', function(e) {
     swal(
         'Question!',
-        'You clicked the <b style="color:#924AEF;">question</b> button!',
+        'You clicked the <b style="color:#20677d;">question</b> button!',
         'question'
     )
 });

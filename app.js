@@ -10,6 +10,7 @@ const indexRouter = require('./routes/index');
 const userRouter = require('./routes/user');
 const customerRouter = require('./routes/customer');
 const productRouter = require('./routes/product');
+const transactionRouter = require('./routes/transaction');
 const ledgerRouter = require('./routes/ledger');
 
 
@@ -39,6 +40,7 @@ app.use(logRequest('log.txt'));
 app.use("/", indexRouter);
 app.use("/customer", customerRouter);
 app.use("/product", productRouter);
+app.use("/transaction", transactionRouter);
 app.use("/user", userRouter);
 app.use("/ledger", ledgerRouter);
 

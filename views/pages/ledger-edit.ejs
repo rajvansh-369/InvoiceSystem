@@ -56,9 +56,9 @@
                                             <div class="fs-14 fw-semibold">
                                                 <h6 class="text-gray-300 ls-1 text-uppercase mb-1">Address</h6>
                                                 <p class="mb-0">
-                                                    <%= result.customer.address %> ,
-                                                        <%= result.customer.city %>,
-                                                            <%= result.customer.state%>
+                                                    <%= result.customer?.address %> ,
+                                                        <%= result.customer?.city %>,
+                                                            <%= result.customer?.state%>
                                                 </p>
                                             </div>
                                         </div>
@@ -85,8 +85,8 @@
                                             </div>
                                             <div class="fs-14 fw-semibold">
                                                 <h6 class="text-gray-300 ls-1 text-uppercase mb-1">Telephone</h6>
-                                                <p class="mb-0"> <a href="tel:91<%= result.customer.phone%>"> +91 <%=
-                                                            result.customer.phone%></a></p>
+                                                <p class="mb-0"> <a href="tel:91<%= result.customer?.phone%>"> +91 <%=
+                                                            result.customer?.phone%></a></p>
                                             </div>
                                         </div>
                                     </li>
@@ -96,7 +96,7 @@
                                     <div class="form-group position-relative mb-0">
                                         <input type="text"
                                             class="flatpickr form-control fs-20 fw-bold text-uppercase text-dark bg-transparent pd-left-55"
-                                            name="calendar" placeholder="Invoice Date">
+                                            name="calendar" placeholder="Invoice Date" id="inv_date">
                                         <div class="rounded-2 position-absolute top-50 translate-middle-y ms-3">
                                             <i class="bi bi-calendar-check-fill fs-28"></i>
                                         </div>
@@ -112,8 +112,8 @@
                                     <div class="col">
                                         <h6 class="text-gray-300 text-uppercase ls-1">Invoice No</h6>
                                         <input type="text"
-                                            class="form-control ff-heading fs-18 fw-semibold text-dark w-100"
-                                            name="inv-id" placeholder="Input ID" value="#INV-000<%= result.bill_no%>"
+                                            class="form-control ff-heading fs-18 fw-semibold text-dark w-100" id="invoice_no"
+                                            name="inv-id" placeholder="Input ID" value="<%= result.bill_no%>"
                                             required>
                                     </div>
 
@@ -121,7 +121,7 @@
                                         <h6 class="text-gray-300 text-uppercase ls-1">Amount (USD)</h6>
                                         <input type="text"
                                             class="form-control ff-heading fs-18 fw-semibold text-dark w-100"
-                                            name="inv-id" placeholder="Input Amount" value="<%= new Intl.NumberFormat('en-US', { style: 'currency', currency: 'INR' }).format(result.total_amount) %>
+                                            name="inv-id" placeholder="Input Amount" id="inv_amount" value="<%= new Intl.NumberFormat('en-US', { style: 'currency', currency: 'INR' }).format(result.total_amount) %>
                                     " required>
                                     </div>
                                 </div>
@@ -141,7 +141,7 @@
                                         <% if (result.ledger_products.length> 0) { %>
                                             <% result.ledger_products.forEach((item, index)=> { %>
                                                 <% item.product.forEach((row, subIndex)=> { %>
-
+                                                        
                                                     <div
                                                         class="row border-bottom border-1 border-light-200 position-relative">
                                                         <div class="col">
@@ -170,47 +170,63 @@
                                                                 class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1"
                                                                 placeholder="Amount..."
                                                                 value="<%=  item.product_qty * item.product_price  %>">
+                                                                <!-- <%= JSON.stringify() %> -->
                                                         </div>
+                                                        <div
+                                                        class="delete-item w-auto position-absolute top-50 translate-middle-y">
+                                                        <button data-repeater-delete type="button"
+                                                            class="btn text-danger border-0 shadow-none p-0 lh-55"><i
+                                                                class="bi bi-trash-fill delete_added_product(<%= item.ledger_product_details.ledger_product_details._id %>)"></i></button>
+                                                    </div>
                                                     </div>
                                                     <% }); %>
                                                         <% }); %>
                                                             <% } %>
                                                                 <!-- New Product Entry -->
-                                                                <div
-                                                                    class="row border-bottom border-1 border-light-200 position-relative">
+                                                                <div class="row border-bottom border-1 border-light-200 position-relative dynamic-product-row product-row"
+                                                                    data-repeater-item>
                                                                     <div class="col">
                                                                         <select
-                                                                            class="kleon-select-search new-product-list"
+                                                                            class="kleon-select new_product_list new-product-list"
                                                                             id="new_product_list">
                                                                         </select>
+
+                                                                        <input type="hidden" class="ledger_id"
+                                                                            value="<%= result.id %>">
                                                                     </div>
                                                                     <div class="col">
                                                                         <input type="text"
-                                                                            class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1"
+                                                                            class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1 product_qty product_qty"
                                                                             placeholder="Duration..."
-                                                                            id="new_product_qty">
+                                                                            id="new_product_qty" value=""
+                                                                            onchange="calculate_price(event)">
                                                                     </div>
                                                                     <div class="col">
                                                                         <input type="text"
-                                                                            class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1"
-                                                                            placeholder="Rate..."
-                                                                            id="new_product_price">
+                                                                            class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1 product_price"
+                                                                            placeholder="Rate..." id="new_product_price"
+                                                                            value="" onchange="calculate_price(event)">
+
                                                                     </div>
                                                                     <div class="col">
                                                                         <input type="text"
-                                                                            class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1"
+                                                                            class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1 product_amount"
                                                                             placeholder="Amount..."
-                                                                            id="new_product_amount" readonly>
+                                                                            id="new_product_amount" value="">
                                                                     </div>
-                                                                    <div class="col">
-                                                                        <button type="button" id="add_product"
-                                                                            class="btn btn-primary">Add Product</button>
+                                                                    <div
+                                                                        class="delete-item w-auto position-absolute top-50 translate-middle-y">
+                                                                        <button data-repeater-delete type="button"
+                                                                            class="btn text-danger border-0 shadow-none p-0 lh-55"><i
+                                                                                class="bi bi-trash-fill"></i></button>
                                                                     </div>
                                                                 </div>
+
                                     </div>
                                     <div class="form-group mt-3 mb-0">
                                         <button data-repeater-create type="button"
-                                            class="btn btn-outline-primary px-3 py-1 rounded-1">Add Item <i
+                                            class="btn btn-outline-primary px-3 py-1 rounded-1"
+                                            onclick="populateProductDropdown()">Add Item <i
                                                 class="bi bi-plus-circle ms-1"></i></button>
                                     </div>
                                 </div>
@@ -234,7 +250,8 @@
                                         class="btn btn-primary ff-heading fs-18 fw-bold text-uppercase py-2 m-0"><span
                                             class="me-3"><i class="bi bi-save-fill"></i></span> Send Invoice</button>
                                     <button
-                                        class="btn btn-outline-primary ff-heading fs-18 fw-bold text-uppercase py-2 m-0">Save
+                                        class="btn btn-outline-primary ff-heading fs-18 fw-bold text-uppercase py-2 m-0"
+                                        id="add_product">Save
                                         To Later</button>
                                 </div>
                             </div>
@@ -249,6 +266,55 @@
 
     <script>
 
+
+        function calculate_price(event) {
+            // Calculate the amount dynamically
+
+            const changedElement = $(event.target);
+
+            // Find the closest row/container (e.g., a parent element that groups the inputs)
+            const row = changedElement.closest('.product-row');
+
+            // Get the quantity and price within the same row
+            const qty = parseFloat(row.find('.product_qty').val()) || 0;
+            const price = parseFloat(row.find('.product_price').val()) || 0;
+
+            console.log(event.target.value, "event");
+            // Calculate the total amount for this row
+            const totalAmount = qty * price;
+
+            // Set the calculated amount in the respective total amount input
+            row.find('.product_amount').val(totalAmount);
+
+            console.log(`Row updated: Quantity = ${qty}, Price = ${price}, Total Amount = ${totalAmount}`);
+
+        }
+
+
+        // Populate the dropdown for the new product entry
+        function populateProductDropdown() {
+            $.ajax({
+                url: '/product/getProduct', // API to get product list
+                type: 'POST',
+                dataType: 'json', // Expecting JSON response
+                success: function (response) {
+
+                    if (response.success) {
+                        const dropdown = $('.new_product_list');
+                        console.log(dropdown);
+                        dropdown.empty(); // Clear existing options
+                        response.data.forEach(product => {
+                            dropdown.append(`<option value="${product.id}">${product.name}</option>`);
+                        });
+                    } else {
+                        console.error('Failed to fetch products:', response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                }
+            });
+        }
         $(document).ready(function () {
 
 
@@ -270,7 +336,7 @@
                         const customerList = $('#customer_list');
                         customerList.empty(); // Clear existing options
                         // The ID from EJS to mark as selected
-                        const selectedCustomerId = <%= JSON.stringify(parseInt(result.customer.id)) %>;
+                        const selectedCustomerId = <%= JSON.stringify(parseInt(result.customer?.id)) %>;
                 response.data.forEach(customer => {
                     if (selectedCustomerId == customer.id) {
                         // Mark this option as selected
@@ -322,99 +388,96 @@
         });
 
 
-        // Populate the dropdown for the new product entry
-        function populateProductDropdown() {
-            $.ajax({
-                url: '/product/getProduct', // API to get product list
-                type: 'POST',
-                dataType: 'json', // Expecting JSON response
-                success: function (response) {
-                    if (response.success) {
-                        const dropdown = $('#new_product_list');
-                        dropdown.empty(); // Clear existing options
-                        response.data.forEach(product => {
-                            dropdown.append(`<option value="${product.id}">${product.name}</option>`);
-                        });
-                    } else {
-                        console.error('Failed to fetch products:', response.message);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error('AJAX Error:', status, error);
-                }
-            });
-        }
+
 
         // Call this function on page load to populate the dropdown
         populateProductDropdown();
 
-        // Calculate the amount dynamically
-        $('#new_product_qty, #new_product_price').on('input', function () {
-            const qty = parseFloat($('#new_product_qty').val()) || 0;
-            const price = parseFloat($('#new_product_price').val()) || 0;
-            $('#new_product_amount').val(qty * price);
-        });
+        function calculate_price(event) {
+            console.log(event, "event");
+            // Calculate the amount dynamically
+            $('.product_qty, #new_product_price').on('input', function () {
+                const qty = parseFloat($('#new_product_qty').val()) || 0;
+                const price = parseFloat($('#new_product_price').val()) || 0;
+                $('#new_product_amount').val(qty * price);
+            });
 
+        }
 
         // Add product on button click
         $('#add_product').on('click', function () {
-            const ledgerId = $('#ledger_id').val(); // Assuming ledger_id is stored in a hidden input or accessible field
-            const productId = $('#new_product_list').val();
-            const productQty = $('#new_product_qty').val();
-            const productPrice = $('#new_product_price').val();
-            const productAmount = $('#new_product_amount').val();
 
-            if (!ledgerId || !productId || !productQty || !productPrice) {
-                alert('Please fill in all fields!');
-                return;
-            }
+            event.preventDefault();
+            const data = [];
+            const allProducts = [];
+            const ledgerData = [];
+            $('.dynamic-product-row').each(function () {
+                const row = $(this);
+                const productId = row.find('.new-product-list').val();
+                const productQty = row.find('.product_qty').val();
+                const productPrice = row.find('.product_price').val();
+                const ledgerId = row.find('.ledger_id').val();
+
+                console.log("productId", productId)
+                if (productId && productQty && productPrice) {
+                    allProducts.push({
+                        ledger_id: ledgerId,
+                        product_id: productId,
+                        product_qty: productQty,
+                        product_price: productPrice,
+                    });
+                }
+            });
+
+            console.log("allProducts", allProducts)
+            const ledgerId = $('.ledger_id').val(); // Assuming ledger_id is stored in a hidden input or accessible field
+            const customer_list = $('#customer_list').val().toString();
+            const invoice_no = $('#invoice_no').val();
+            const inv_amount = $('#inv_amount').val();
+            const inv_date = new Date($('#inv_date').val());
+
+            ledgerData.push({
+                        ledger_id: ledgerId,
+                        customer_list: customer_list,
+                        invoice_no: invoice_no,
+                        inv_amount: inv_amount,
+                        inv_date: inv_date,
+                    });
+
+                    data.push({
+                        ledger : ledgerData,
+                        products : allProducts
+
+                    });
+                    console.log("ledgerData",data);
+            // $('#add_product').attr('disabled', true)
+
+            // if (!ledgerId || !productId || !productQty || !productPrice) {
+            //     alert('Please fill in all fields!');
+            //     // return;
+            // }
 
             // Send the data to the server for insertion
+
+            // Send all product data to the server
             $.ajax({
-                url: '/product/addProduct', // API to add product
+                url: '/ledger/updateLedger', // API to save multiple products
                 type: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify({
-                    ledger_id: ledgerId,
-                    product_id: productId,
-                    product_qty: productQty,
-                    product_price: productPrice,
-                }),
+                data: JSON.stringify(data[0]),
                 success: function (response) {
                     if (response.success) {
-                        alert('Product added successfully!');
-                        // Optionally append the new product to the UI (client-side)
-                        const newRow = `
-            <div class="row border-bottom border-1 border-light-200 position-relative">
-                <div class="col">
-                    <select class="kleon-select-search" disabled>
-                        <option value="${productId}" selected>${$('#new_product_list option:selected').text()}</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1"
-                        placeholder="Duration..." value="${productQty}" readonly>
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1"
-                        placeholder="Rate..." value="${productPrice}" readonly>
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control ff-heading fs-18 fw-semibold text-dark w-100 border-0 shadow-none p-1"
-                        placeholder="Amount..." value="${productAmount}" readonly>
-                </div>
-            </div>
-          `;
-                        $('.new-product-list').parent().after(newRow); // Append below the input fields
-                        // Reset the form fields
-                        $('#new_product_qty, #new_product_price, #new_product_amount').val('');
-                        $('#new_product_list').val('');
+                        alert('Products added successfully!');
+                        // location.reload();
+                        console.log(response);
+                        // Optionally refresh the page or clear the form
+                        // $('.dynamic-product-row').remove(); // Clear all rows
                     } else {
-                        alert('Failed to add product: ' + response.message);
+                        alert('Failed to add products: ' + response.message);
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.error('Error adding product:', status, error);
+                    console.error('Error saving products:', status, error);
                 }
             });
         });
