@@ -1,6 +1,6 @@
 // const User = require('../models/user');
 const db = require("../models/all-models.js");
-const Transaction = require("../models/product.js");
+const Transaction = require("../models/transaction.js");
 
 
 
@@ -16,28 +16,53 @@ module.exports = {
 
 async function getTransaction(req, res) {
 
-    const allTransaction = await Transaction.find();
-    console.log(allTransaction.length);
+    const allTransaction = await Transaction.aggregate([
+        {
+            $addFields: {
+                customer_id_str: { $toString: "$customer_id" }  // Convert to string
+            }
+        },
+        {
+            $lookup: {
+                from: "customers", 
+                localField: "customer_id_str",  // Use the converted string field
+                foreignField: "id",  // Ensure "id" in customers collection is a string
+                as: "customer",
+            }
+        },
+        {
+            $unwind: {
+                path: "$customer",
+                preserveNullAndEmptyArrays: true, 
+            },
+        }
+    ]);
+    console.log("getTransaction",allTransaction);
     res.render('pages/transactions', { allTransaction });
 
 }
 
 async function updateTransaction(req, res) {
 
-    const result = await Transaction.updateOne(
-        { product_id: req.body.product_id },// Filter
-        { $set: { name: req.body.name, nug: req.body.nug } } // Update fields
-    );
+ 
+    try {
+        const { transaction_id, customer_id, credit, debit, transaction_date } = req.body;
 
-    // const allTransaction = await Transaction.find();
-    // const product = await Transaction.findOne({ product_id: req.body.product_id });
-    console.log(req.body.name, result, req.body.nug);
 
-    if (result) {
-        // result.name = name;
-        res.json({ success: true });
-    } else {
-        res.json({ success: false, message: 'Record not found' });
+        console.log(" req.body",  req.body)
+        const updatedTransaction = await Transaction.findOneAndUpdate(
+            { id: transaction_id },  // Filter condition
+            { $set: { customer_id, credit, debit, transaction_date } },  // Fields to update
+            { new: true }  // Return the updated document
+        );
+
+        if (updatedTransaction) {
+            res.json({ success: true, data: updatedTransaction, message: 'Transaction updated successfully' });
+        } else {
+            res.json({ success: false, message: 'Transaction not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Error updating transaction', error: error.message });
     }
 }
 
@@ -45,7 +70,7 @@ async function updateTransaction(req, res) {
 async function editTransaction(req, res) {
 
     const result = await Transaction.findOne(
-        { product_id: req.body.product_id },// Filter
+        { id: req.body.id },// Filter
     );
 
     console.log(req.body.name, result, req.body.nug);
@@ -61,10 +86,10 @@ async function editTransaction(req, res) {
 async function createTransaction(req, res) {
 
 
-    const { name, nug } = req.body;
+    const { customer_id, credit, debit,transaction_date   }= req.body;
     // Validate required fields
-    if (!name || !nug) {
-        return res.status(400).json({ success: false, message: 'Name and nug are required' });
+    if (!customer_id || !credit|| !debit|| !transaction_date) {
+        return res.status(400).json({ success: false, message: 'Credit, Debit and transaction_date are required' });
     }
 
     // Get the last product's product_id and increment it
@@ -91,17 +116,18 @@ async function createTransaction(req, res) {
         }
     ]);
     const id = lastTransaction ? Number(lastTransaction[0].id) + 1 : 1; // Increment or start at 1
-    const slug = name.toLowerCase().replace(/\s+/g, '-'); // Generate slug
+    // const slug = name.toLowerCase().replace(/\s+/g, '-'); // Generate slug
     console.log("ID", id, lastTransaction);
     // Create a new product
     const result = await Transaction.create({
         id,
-        name,
-        slug,
-        nug,
+        customer_id,
+        credit,
+        debit,
+        transaction_date
     });
 
-    console.log(req.body.name, req.body.nug);
+    console.log("createTransaction", result);
 
     if (result) {
         // result.name = name;

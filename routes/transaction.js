@@ -6,6 +6,6 @@ const router = express.Router();
 router.get("/", getTransaction);
 router.post("/create", createTransaction);
 router.post("/update", updateTransaction);
-router.post("/editProdut", editTransaction);
+router.post("/editTransaction", editTransaction);
 router.post("/getTransaction", getTransactionAPI);
 module.exports = router;

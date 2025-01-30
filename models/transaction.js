@@ -3,13 +3,11 @@ const mongoose = require('mongoose');
 
 const newSchema = new mongoose.Schema(
     {
-        id: { type: String, required: true, unique: true  },
-        name: { type: String, required: true },
-        price: { type: Number , required: false },
-        nug: { type: Number , required: true },
-        net_weight: { type: Number   , required: false },
-        gross_weight: { type: Number   , required: false },
-        peti: { type: Number  , required: false }
+        id: { type: String,required: true, unique: true  }, // Normal integer IDc
+        customer_id: { type: Number, required: true }, // Normal integer IDc
+        credit: { type: Number , required: false },
+        debit: { type: Number , required: true },
+        transaction_date: { type: String   , required: false },
     },
     { timestamps: true } // Adds createdAt and updatedAt fields automatically
 );

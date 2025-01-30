@@ -47,8 +47,10 @@
                                 <tr>
                                     <th><input type="checkbox" class="form-check-input" id="checkbox1" value="">
                                     </th>
-                                    <th>Name</th>
-                                    <th>KG/NUG</th>
+                                    <th>Customer Name</th>
+                                    <th>Credit</th>
+                                    <th>Debit</th>
+                                    <th>Transaction Date</th>
 
                                     <!-- <th>Net Weight</th>
                                     <th>Gross Weight</th>
@@ -68,7 +70,7 @@
                                                 <div class="employee d-flex gap-1 flex-wrap">
                                                     <div class="description">
                                                         <h6>
-                                                            <%= item.name %>
+                                                            <%= item.customer.name %>
                                                         </h6> <!-- Assuming 'item.name' contains the customer's name -->
                                                         <!-- <small>
                                                             <%= item.price %>
@@ -78,7 +80,13 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <%= item.nug %>
+                                                <%= item.credit %>
+                                            </td>
+                                            <td>
+                                                <%= item.debit %>
+                                            </td>
+                                            <td>
+                                                <%= item.transaction_date %>
                                             </td>
 
                                             <!-- <td>
@@ -139,24 +147,42 @@
                                     </div>
                                     <form class="" method="post">
                                         <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
-                                                        <input type="hidden" id="record-id" name="id">
-                                                        <label class="form-label">Product Name</label>
-                                                        <input type="text" id="product_name" class="form-control"
-                                                            name="product_name" value="" placeholder="Full Name">
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <input type="hidden" id="record-id" name="id">
+                                                            <label class="form-label">Customer Name</label>
+                                                            <select class="customer_list " id="customer_list_edit">
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
-                                                        <label class="form-label">Weight per NUG (KG)*</label>
-                                                        <!-- <small class="text-muted">eg: admin@email.com</small> -->
-                                                        <input id="nug" type="number" class="form-control" name="nug"
-                                                            placeholder="00" required="">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Credit*</label>
+                                                            <!-- <small class="text-muted">eg: admin@email.com</small> -->
+                                                            <input id="credit_edit" type="number" class="form-control" name="credit_edit"
+                                                                placeholder="00" required="">
+                                                        </div>
                                                     </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Debit*</label>
+                                                            <!-- <small class="text-muted">eg: admin@email.com</small> -->
+                                                            <input id="debit_edit" type="number" class="form-control" name="debit_edit"
+                                                                placeholder="00" required="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Transaction Date*</label>
+                                                            <!-- <small class="text-muted">eg: admin@email.com</small> -->
+                                                            <input id="transaction_date_edit" type="date" class="form-control" name="transaction_date_edit"
+                                                                placeholder="00" required="">
+                                                        </div>
+                                                    </div>
+    
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -187,21 +213,36 @@
                                     <form class="" method="post">
                                         <div class="modal-body">
                                             <div class="row">
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-12">
                                                     <div class="form-group">
                                                         <input type="hidden" id="record-id" name="id">
-                                                        <label class="form-label">Product Name</label>
-                                                        <input type="text" id="create_product_name" class="form-control"
-                                                            name="product_name" value=""
-                                                            placeholder="Full Product Name">
+                                                        <label class="form-label">Customer Name</label>
+                                                        <select class=" customer_list" id="customer_list">
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="form-group">
-                                                        <label class="form-label">Weight per NUG (KG)*</label>
+                                                        <label class="form-label">Credit*</label>
                                                         <!-- <small class="text-muted">eg: admin@email.com</small> -->
-                                                        <input id="create_nug" type="number" class="form-control"
-                                                            name="nug" placeholder="00" required="">
+                                                        <input id="credit_create" type="number" class="form-control" name="credit_create"
+                                                            placeholder="00" required="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Debit*</label>
+                                                        <!-- <small class="text-muted">eg: admin@email.com</small> -->
+                                                        <input id="debit_create" type="number" class="form-control" name="debit_create"
+                                                            placeholder="00" required="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Transaction Date*</label>
+                                                        <!-- <small class="text-muted">eg: admin@email.com</small> -->
+                                                        <input id="transaction_date_create" type="date" class="form-control" name="nug"
+                                                            placeholder="00" required="">
                                                     </div>
                                                 </div>
 
@@ -259,6 +300,31 @@
             //     }
             });
 
+            $.ajax({
+                url: '/customer/getCustomers', // Your API endpoint
+                type: 'POST',
+                dataType: 'json', // Expecting JSON response
+                success: function (response) {
+                    if (response.success) {
+                        const customerList = $('.customer_list');
+                        customerList.empty(); // Clear existing options
+                        // The ID from EJS to mark as selected
+                        // const selectedCustomerId =;
+                response.data.forEach(customer => {
+                   
+                        customerList.append(`<option value="${customer.id}">${customer.name}</option>`);
+                  
+                });
+                        } else {
+                            console.error('Failed to fetch customers:', response.message);
+                        }
+                },
+            error: function (xhr, status, error) {
+                console.error('AJAX Error:', status, error);
+            }
+            });
+
+           
 
             // Open modal on button click
             $('.edit-btn').on('click', function () {
@@ -270,7 +336,7 @@
                 $('#record-name').val(name);
                 console.log("asdasddas");
                 $.ajax({
-                    url: '/product/editProdut',
+                    url: '/transaction/editTransaction',
                     method: 'POST',
                     data: { id },
                     success: function (response) {
@@ -278,8 +344,11 @@
                             // Update table row dynamically
                             console.log("response", response);
                             data = response.data;
-                            $('#product_name').val(data.name);
-                            $('#nug').val(data.nug);
+                            document.getElementById('customer_list_edit').value = data.customer_id;
+                            // $('#customer_list_edit').val(data.customer_list);
+                            $('#credit_edit').val(data.credit);
+                            $('#debit_edit').val(data.debit);
+                            $('#transaction_date_edit').val(data.transaction_date);
 
                         } else {
                             alert('Update failed');
@@ -301,16 +370,19 @@
                 e.preventDefault();
 
                 //  const id = $('#record-id').val();
-                const name = $('#create_product_name').val();
-                const nug = $('#create_nug').val();
+                const customer_id = $('#customer_list').val();
+                const credit = $('#credit_create').val();
+                const debit = $('#debit_create').val();
+                const transaction_date = $('#transaction_date_create').val();
 
-                validate_blank(name, "Name");
-                validate_blank(nug, "Nug");
+                validate_blank(credit, "Credit");
+                validate_blank(debit, "Debit");
+                validate_blank(transaction_date, "Transaction Date");
                 // AJAX call to update the record
                 $.ajax({
-                    url: '/product/create',
+                    url: '/transaction/create',
                     method: 'POST',
-                    data: { name, nug },
+                    data: { customer_id, credit, debit,transaction_date   },
                     success: function (response) {
                         if (response.success) {
                             location.reload();
@@ -327,23 +399,27 @@
             // Handle form submission
             $('#edit-form').on('click', function (e) {
                 e.preventDefault();
+                
+                const transaction_id = $('#record-id').val();
+                const customer_id = $('#customer_list_edit').val();
+                const credit = $('#credit_edit').val();
+                const debit = $('#debit_edit').val();
+                const transaction_date = $('#transaction_date_edit').val();
 
-                const id = $('#record-id').val();
-                const name = $('#product_name').val();
-                const nug = $('#nug').val();
-
-                validate_blank(name, "Name");
-                validate_blank(nug, "Nug");
+                validate_blank(customer_id, "Customer");
+                // validate_blank(credit, "Credit");
+                // validate_blank(debit, "Debit");
+                validate_blank(transaction_date, "Transaction Date");
                 // AJAX call to update the record
                 $.ajax({
-                    url: '/product/update',
+                    url: '/transaction/update',
                     method: 'POST',
-                    data: { id, name, nug },
+                    data: {transaction_id, customer_id, credit, debit,transaction_date   },
                     success: function (response) {
                         if (response.success) {
-                            // Update table row dynamically
-                            $(`button[data-id="${id}"]`).data('name', name);
-                            $(`button[data-id="${id}"]`).closest('tr').find('td:nth-child(2)').text(name);
+                            // // Update table row dynamically
+                            // $(`button[data-id="${id}"]`).data('name', name);
+                            // $(`button[data-id="${id}"]`).closest('tr').find('td:nth-child(2)').text(name);
 
                             location.reload();
                         } else {
@@ -362,6 +438,6 @@
                     $('#editModal').hide();
                 }
             });
-        });
+    
 
     </script>
