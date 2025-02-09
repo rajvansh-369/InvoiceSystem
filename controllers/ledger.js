@@ -15,6 +15,7 @@ module.exports = {
   getLedger,
   updateLedger,
   editLedger,
+  deleteLedger,
   createLedger,
   viewLedger,
   viewLedgerPdf,
@@ -47,13 +48,19 @@ async function getLedger(req, res) {
       },
       {
         $unwind: '$customer_details' // Deconstructs the array returned by $lookup
+      },
+      {
+        $sort:{
+          createdAt : -1
+        }
       }
+      
     ]);
     // Encrypt the `id` field in the results
     const allLedger = result.map((ledger) => {
       return {
         ...ledger,
-        id: encrypt(ledger.id.toString()), // Encrypt the `id` field
+        id: (ledger.id), // Encrypt the `id` field
       };
     });
 
@@ -65,6 +72,25 @@ async function getLedger(req, res) {
   }
 
 }
+
+
+async function deleteLedger(req, res) {
+  try {
+      const result = await Ledger.deleteOne({ id: req.params.ledgerId }); // Fix `req.param` to `req.params`
+
+      console.log(req.body.ledgerId, result, req.params.ledgerId.toString());
+
+      if (result.deletedCount > 0) {
+          res.redirect('back'); // Redirects the user back to the previous page
+      } else {
+          res.json({ success: false, message: 'Record not found' });
+      }
+  } catch (error) {
+      console.error('Error deleting ledger:', error);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+}
+
 
 async function updateLedger(req, res) {
 
@@ -88,7 +114,7 @@ async function updateLedger(req, res) {
 
 async function editLedger(req, res) {
 
-  const decryptedId = decrypt(req.params.ledgerId);
+  const decryptedId = (req.params.ledgerId);
   const ledgerId = decryptedId; // Retrieve the ledger ID
 
   console.log("ledgerId",ledgerId,decryptedId);
@@ -211,7 +237,7 @@ async function editLedger(req, res) {
 async function viewLedger(req, res) {
 
   console.log("ledgerId",req.params.ledgerId);
-  const decryptedId = decrypt(req.params.ledgerId);
+  const decryptedId = (req.params.ledgerId);
   const ledgerId = decryptedId; // Retrieve the ledger ID
 
   const data = await Ledger.aggregate([
@@ -456,9 +482,24 @@ async function createLedgerView(req, res) {
 
 
   // const ledgerId = req.params.ledgerId; // Retrieve the ledger ID
-  const data = await Ledger.findOne().sort({ id: -1 })
+  // const data = await Ledger.findOne().sort({ id: -1 })
 
-  // result = data[0];
+  const result = await Ledger.aggregate([
+    {
+      $addFields: {
+        idAsInt: { $toInt: "$id" } // Convert id to an integer
+      }
+    },
+    {
+      $sort: { idAsInt: -1 } // Sort by converted integer field
+    },
+    {
+      $limit: 1 // Get only the latest record
+    }
+  ]);
+
+
+  data = result[0];
   console.log(data, 'test');
   data.bill_no++;
   if (data) {
@@ -480,9 +521,9 @@ async function createLedgerView(req, res) {
 async function createLedger(req, res) {
 
 
-  const { name, nug } = req.body;
+  const { invoice_no ,customer_id } = req.body;
 
-
+  var lastLedger = 0
   const checkBillNo = await Ledger.find({ bill_no: req.body.invoice_no });
 
 
@@ -492,26 +533,61 @@ async function createLedger(req, res) {
     return res.status(200).json({ success: false, message: 'Invoice No is already exist !' });
   }
 
+      const lastProduct = await Ledger.aggregate([
+          {
+              $addFields: {
+                  idAsNumber: { $toInt: "$id" } // Convert `id` from string to integer
+              }
+          },
+          {
+              $sort: { idAsNumber: -1 } // Sort by the numeric `id` in descending order
+          },
+          {
+              $limit: 1 // Fetch the top result
+          },
+          {
+              $project: {
+                  ledger_id: 1, // Include `product_id` in the result
+                  id: 1 // Include original `id` in the result
+              }
+          }
+      ]);
 
-  const id = lastLedger ? Number(lastLedger[0].id) + 1 : 1; // Increment or start at 1
-  const slug = name.toLowerCase().replace(/\s+/g, '-'); // Generate slug
-  console.log("ID", id, lastLedger);
+      console.log("lastProduct",lastProduct);
+   const id = lastProduct ? Number(lastProduct[0].id) + 1 : 1; // Increment or start at 1
+
+  const bill_no = invoice_no ? Number(invoice_no) + 1 : 1; // Increment or start at 1
+  //const slug = name.toLowerCase().replace(/\s+/g, '-'); // Generate slug
+  // console.log("ID", bill_no,id);
   // Create a new Ledger
-  const result = await Ledger.create({
-    id,
-    name,
-    slug,
-    nug,
-  });
+  const createLedger = await Ledger.create({
+    bill_no, // Fixed typo (was `biil_no`)
+    customer_id,
+    id, // Ensure `id` is provided if required
+});
 
-  console.log(req.body.name, req.body.nug);
+  
 
-  if (result) {
-    // result.name = name;
-    res.json({ success: true, data: result, message: 'Record found' });
-  } else {
-    res.json({ success: false, message: 'Record not found' });
-  }
+const decryptedId = encrypt(id.toString());
+const ledgerId = id; // Retrieve the ledger ID
+
+
+console.log( id, decrypt(ledgerId))
+
+
+// result = data[0];
+// console.log(result, result.ledger_products[0].ledger_product_details, 'test');
+
+
+
+// if (result) {
+  // result.name = name;
+  // res.render('pages/ledger-edit', { result });
+
+  res.json({ success: true, ledgerId : ledgerId, message: 'Record found' });
+  // } else {
+  //     res.json({ success: false, message: 'Record not found' });
+  //   }
 }
 
 

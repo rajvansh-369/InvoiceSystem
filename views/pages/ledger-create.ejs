@@ -215,6 +215,7 @@
 
             $('#add_product').on('click', function (event) {
                    event.preventDefault(); // Prevent the default form submission
+                var customer_id = $('#customer_list').val();
                 var invoice_no = $('#invoice_no').val();
 
                 $.ajax({
@@ -222,7 +223,7 @@
                     type: 'POST',
                     contentType: 'application/json', // Specify content type of request
                     dataType: 'json', // Specify expected response type
-                    data: JSON.stringify({ invoice_no: invoice_no }), // Explicitly set the key
+                    data: JSON.stringify({ invoice_no: invoice_no, customer_id:customer_id }), // Explicitly set the key
                     success: function (response) {
 
                         console.log(response);

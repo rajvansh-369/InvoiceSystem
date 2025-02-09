@@ -21,6 +21,10 @@
                     class="card-header pb-5 bg-transparent border-0 d-flex align-items-center justify-content-between gap-3">
                     <h4 class="mb-0">Customers</h4>
                     <div class="ms-auto d-flex align-items-center gap-3">
+                        <a data-bs-target="#create_customer" data-bs-toggle="modal">
+
+                            <button class="btn btn-gray"> Create</button>
+                        </a>
                         <div class="dropdown">
                             <a href="#" data-bs-toggle="dropdown" class="fs-24 text-gray">
                                 <i class="bi bi-three-dots-vertical"></i>
@@ -112,7 +116,213 @@
                         </table>
                     </div>
                 </div>
+
+                   <!-- Modal Create Product -->
+                   <div class="modal fade" id="create_customer" tabindex="-1" aria-labelledby="create_customerLabel"
+                   aria-hidden="true">
+                   <!-- <div class="modal"> -->
+                   <!-- Use "fade" instead "position-static d-block" for modal action-->
+                   <div class="modal-dialog">
+                       <div class="modal-content">
+                           <div class="modal-header">
+                               <h5 class="modal-title" id="ModalLabel">Modal title</h5>
+                               <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                   aria-label="Close"></button>
+                           </div>
+                           <form class="" method="post">
+                               <div class="modal-body">
+                                   <div class="row">
+                                       <div class="col-lg-6">
+                                           <div class="form-group">
+                                               <input type="hidden" id="record-id" name="id">
+                                               <label class="form-label">Customer Name</label>
+                                               <input type="text" id="create_customer_name" class="form-control"
+                                                   name="customer_name" value=""
+                                                   placeholder="Full Customer Name">
+                                           </div>
+                                       </div>
+                                       <div class="col-lg-6">
+                                           <div class="form-group">
+                                               <label class="form-label">Phone*</label>
+                                               <!-- <small class="text-muted">eg: admin@email.com</small> -->
+                                               <input id="create_phone" type="number" class="form-control"
+                                                   name="phone" placeholder="00" required="">
+                                           </div>
+                                       </div>
+                                      
+                                       <div class="col-lg-6">
+                                           <div class="form-group">
+                                               <label class="form-label">Address*</label>
+                                               <!-- <small class="text-muted">eg: admin@email.com</small> -->
+                                               <input id="create_address" type="text" class="form-control"
+                                                   name="address" placeholder="" required="">
+                                           </div>
+                                       </div>
+                                       <div class="col-lg-6">
+                                           <div class="form-group">
+                                               <label class="form-label">City</label>
+                                               <!-- <small class="text-muted">eg: admin@email.com</small> -->
+                                               <input id="create_city" type="text" class="form-control"
+                                                   name="city" placeholder="" required="">
+                                           </div>
+                                       </div>
+                                       <div class="col-lg-6">
+                                           <div class="form-group">
+                                               <label class="form-label">State*</label>
+                                               <!-- <small class="text-muted">eg: admin@email.com</small> -->
+                                               <input id="create_state" type="text" class="form-control"
+                                                   name="state" placeholder="" required="">
+                                           </div>
+                                       </div>
+                                       <div class="col-lg-6">
+                                           <div class="form-group">
+                                               <label class="form-label">Country*</label>
+                                               <!-- <small class="text-muted">eg: admin@email.com</small> -->
+                                               <input id="create_country" type="text" class="form-control"
+                                                   name="country" placeholder="" required="">
+                                           </div>
+                                       </div>
+
+                                   </div>
+                               </div>
+                               <div class="modal-footer">
+                                   <button type="button" class="btn btn-warning btn-sm  px-2"
+                                       data-bs-dismiss="modal">Close</button>
+                                   <button id="create-form" type="button"
+                                       class="btn btn-success btn-sm  px-2">Save
+                                       changes</button>
+                               </div>
+                           </form>
+                       </div>
+                   </div>
+                   <!-- </div> -->
+               </div>
             </div>
 
         </div>
     </div>
+
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <script>
+
+        
+$(document).ready(function () {
+
+
+     // Open modal on button click
+     $('.edit-btn').on('click', function () {
+                const id = $(this).data('id');
+                const name = $(this).data('name');
+
+                // Populate modal fields
+                $('#record-id').val(id);
+                $('#record-name').val(name);
+                console.log("asdasddas");
+                $.ajax({
+                    url: '/product/editProdut',
+                    method: 'POST',
+                    data: { id },
+                    success: function (response) {
+                        if (response.success) {
+                            // Update table row dynamically
+                            console.log("response", response);
+                            data = response.data;
+                            $('#product_name').val(data.name);
+                            $('#nug').val(data.nug);
+
+                        } else {
+                            alert('Update failed');
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred');
+                    },
+                });
+
+
+                console.log(id, "innerAjax");
+                // Show modal
+                $('#editModal').show();
+            });
+
+
+            // Handle form submission
+            $('#create-form').on('click', function (e) {
+                e.preventDefault();
+
+                //  const id = $('#record-id').val();
+                const name = $('#create_customer_name').val();
+                const phone = $('#create_phone').val();
+                const address = $('#create_address').val();
+                const city = $('#create_city').val();
+                const state = $('#create_state').val();
+                const country = $('#create_country').val();
+
+                validate_blank(name, "Name");
+                validate_blank(phone, "Phone");
+                validate_blank(address, "Address");
+                validate_blank(city, "City");
+                validate_blank(state, "State");
+                // validate_blank(country, "Country");
+
+
+                // AJAX call to update the record
+                $.ajax({
+                    url: '/customer/create',
+                    method: 'POST',
+                    data: {name, phone , address, city, state, country },
+                    success: function (response) {
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            alert('Update failed');
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred');
+                    },
+                });
+            });
+
+
+             // Handle form submission
+             $('#edit-form').on('click', function (e) {
+                e.preventDefault();
+
+                const id = $('#record-id').val();
+                const name = $('#product_name').val();
+                const nug = $('#nug').val();
+
+                validate_blank(name, "Name");
+                validate_blank(nug, "Nug");
+                // AJAX call to update the record
+                $.ajax({
+                    url: '/product/update',
+                    method: 'POST',
+                    data: { id, name, nug },
+                    success: function (response) {
+                        if (response.success) {
+                            // Update table row dynamically
+                            $(`button[data-id="${id}"]`).data('name', name);
+                            $(`button[data-id="${id}"]`).closest('tr').find('td:nth-child(2)').text(name);
+
+                            location.reload();
+                        } else {
+                            alert('Update failed');
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred');
+                    },
+                });
+            });
+
+            // Close modal (optional implementation)
+            $(document).on('click', function (e) {
+                if ($(e.target).is('#editModal')) {
+                    $('#editModal').hide();
+                }
+            });
+
+        });
+    </script>
