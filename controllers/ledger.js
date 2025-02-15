@@ -4,7 +4,7 @@ const Ledger = require("../models/ledger.js");
 const Product = require("../models/product.js");
 const ProductLedger = require("../models/product_ledger.js");
 const { encrypt , decrypt } = require('../helper/cryptoUtils'); // Import the utility
-
+const { ObjectId } = require('mongodb');
 
 
 const mongoose = require('mongoose');
@@ -22,6 +22,7 @@ module.exports = {
   updateLedgerAPI,
   createLedgerView,
   sendWaReport,
+  deleteAttachedProduct
 }
 
 
@@ -89,6 +90,27 @@ async function deleteLedger(req, res) {
       console.error('Error deleting ledger:', error);
       res.status(500).json({ success: false, message: 'Internal server error' });
   }
+}
+
+async function deleteAttachedProduct(req, res) {
+  try {
+    const { ledgerProductId } = req.body; // Extract ID from request body
+
+    if (!ledgerProductId || !ObjectId.isValid(ledgerProductId)) {
+        return res.status(400).json({ success: false, message: 'Invalid or missing ID format' });
+    }
+
+    const result = await ProductLedger.deleteOne({ _id: new ObjectId(ledgerProductId) });
+
+    if (result.deletedCount > 0) {
+        res.json({ success: true, message: 'Product deleted successfully' });
+    } else {
+        res.json({ success: false, message: 'Product not found' });
+    }
+} catch (error) {
+    console.error('Error deleting product:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+}
 }
 
 
@@ -218,7 +240,9 @@ async function editLedger(req, res) {
   ]);
 
   result = data[0];
-  console.log(result, result.ledger_products[0].ledger_product_details, 'test');
+
+  console.log(result);
+  // console.log(result, result.ledger_products[0].ledger_product_details, 'test');
 
 
   if (result) {
@@ -529,9 +553,9 @@ async function createLedger(req, res) {
 
   console.log(checkBillNo, "checkBillNo", req.body);
 
-  if (checkBillNo.length > 0) {
-    return res.status(200).json({ success: false, message: 'Invoice No is already exist !' });
-  }
+  // if (checkBillNo.length > 0) {
+  //   return res.status(200).json({ success: false, message: 'Invoice No is already exist !' });
+  // }
 
       const lastProduct = await Ledger.aggregate([
           {
@@ -557,12 +581,14 @@ async function createLedger(req, res) {
    const id = lastProduct ? Number(lastProduct[0].id) + 1 : 1; // Increment or start at 1
 
   const bill_no = invoice_no ? Number(invoice_no) + 1 : 1; // Increment or start at 1
+ const is_paid = 0;
   //const slug = name.toLowerCase().replace(/\s+/g, '-'); // Generate slug
   // console.log("ID", bill_no,id);
   // Create a new Ledger
   const createLedger = await Ledger.create({
     bill_no, // Fixed typo (was `biil_no`)
     customer_id,
+    is_paid,
     id, // Ensure `id` is provided if required
 });
 
@@ -572,7 +598,7 @@ const decryptedId = encrypt(id.toString());
 const ledgerId = id; // Retrieve the ledger ID
 
 
-console.log( id, decrypt(ledgerId))
+// console.log( id, decrypt(ledgerId))
 
 
 // result = data[0];
